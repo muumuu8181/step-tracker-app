@@ -1,71 +1,80 @@
-# 🚀 Universal App Template v0.34 - クイックスタートガイド
+# 🚀 Universal App Template v0.35
 
-## 📚 ドキュメント案内（初めての方はここから！）
+## 📌 5分で新しいアプリを作ってWeb公開する
 
-### 🔰 初心者の方へ
-1. **まずはこのREADMEを最後まで読んでください**
-2. **詳細ドキュメントは [`docs/README.md`](docs/README.md) を確認** ← すべてのドキュメント一覧
-3. **セットアップ手順は [`docs/setup/`](docs/setup/) フォルダ内**
-4. **使い方ガイドは [`docs/guides/`](docs/guides/) フォルダ内**
-
-### 🔍 困ったときは
-- **既知の問題** → [`docs/issues/`](docs/issues/) フォルダを確認
-- **修正履歴** → [`docs/fixes/`](docs/fixes/) フォルダを確認
-- **ドキュメント作成ルール** → [`docs/DOCUMENTATION_RULES.md`](docs/DOCUMENTATION_RULES.md)
-
-## 📌 はじめに
-このテンプレートを使って、**Git干渉なし**で新しいプロジェクトを始められます。
-
----
-
-## 🎯 最小手順（3ステップ）
-
-### ステップ1: プロジェクトフォルダの作成
-
-```bash
-# Windowsの場合
-1. C:\Users\user\Desktop\work\90_cc\0000-00-00-project-template をコピー
-2. C:\Users\user\Desktop\work\90_cc\[本日の日付]\ に貼り付け
-   例: C:\Users\user\Desktop\work\90_cc\20250807\
-3. フォルダ名を変更（例: automation-management-system）
+### 1️⃣ コピー（日付必須）
+```powershell
+# 必ず今日の日付を含める（例: 20250811-calculator-app）
+Copy-Item -Recurse "0000-00-00-project-template" "20250811\20250811-[アプリ名]"
+cd "20250811\20250811-[アプリ名]"
 ```
 
-**重要**: このテンプレートは`.git`フォルダを削除済みなので、**Git干渉は発生しません**
+### 2️⃣ 設定変更（2ファイルのみ）
 
-### ステップ2: GitHubへアップロード
+#### `project-settings.json`
+```json
+{
+  "app": {
+    "name": "[アプリ名]",     // ← ここを変更
+    "description": "[説明]"   // ← ここを変更
+  },
+  "database": {
+    "collection": "[データ名]" // ← ここを変更（例: todos, memos, calculations）
+  }
+}
+```
 
-```bash
-# プロジェクトフォルダ内で実行
+#### `src/custom/app-config.js`
+```javascript
+export const APP_CONFIG = {
+    appName: "[アプリ名]",        // ← 上と同じ名前
+    dataCollection: "[データ名]"  // ← 上と同じデータ名
+};
+```
+
+### 3️⃣ Git初期化とGitHub公開
+```powershell
+# Git初期化
+Remove-Item -Recurse -Force .git
 git init
 git add .
 git commit -m "Initial commit"
 
-# GitHubで新規リポジトリを作成後
-git remote add origin https://github.com/[あなたのユーザー名]/[リポジトリ名].git
+# GitHubリポジトリ作成（gh CLIを使用）
+gh repo create 20250811-[アプリ名] --public --source=. --remote=origin --push
+
+# または手動でGitHubにリポジトリ作成後
+git remote add origin https://github.com/[ユーザー名]/20250811-[アプリ名].git
 git push -u origin main
 ```
 
-### ステップ3: 公開設定の選択
-
-#### 🌐 **パブリック（Web公開する場合）**
-1. GitHubリポジトリを**Public**で作成
-2. Settings → Pages → Source を `main` ブランチに設定
-3. Actions タブで自動デプロイを確認
-4. 公開URL: `https://[ユーザー名].github.io/[リポジトリ名]/`
-
-#### 🔒 **プライベート（Web公開しない場合）**
-1. GitHubリポジトリを**Private**で作成
-2. GitHub Pagesは設定しない
-3. チーム内のみでコード共有
+### 4️⃣ GitHub Pages有効化（Web公開）
+1. GitHubのリポジトリページを開く
+2. Settings → Pages
+3. Source: Deploy from a branch
+4. Branch: main, /(root)
+5. Save
+6. 5-10分後に `https://[ユーザー名].github.io/20250811-[アプリ名]/` でアクセス可能
 
 ---
 
-## ⚠️ アップロード前の確認事項
+## 📂 編集可能ファイル
 
-**Claudeに確認してもらう項目:**
-- [ ] パブリック or プライベート？
-- [ ] Web公開する？（GitHub Pages使用）
-- [ ] 機密情報は含まれていない？
+### ✅ 触ってOK（カスタマイズ領域）
+- `project-settings.json` - アプリ全体の設定
+- `src/custom/app-config.js` - アプリ動作設定  
+- `src/custom/styles.css` - デザイン
+- `index.html` の以下の部分のみ：
+  - タイトル（`<h1>`の中身）
+  - データ入力部分（パネル2の中身）
+  - **⚠️ パネル1（認証）、パネル3（ログ）、パネル4（デバッグ）は絶対に削除しない**
+
+### ❌ 触るな（壊れる）
+- `src/services/` - 認証・DB機能
+- `src/components/` - 共通部品  
+- Firebase設定部分
+- **グリッド/パネル表示ボタン**（開発補助機能なので残す）
+- **デバッグボタン群**（開発時に必要）
 
 ---
 
@@ -254,13 +263,19 @@ src/
 
 ## 🎯 開発情報
 
-- **バージョン**: v0.34
+- **バージョン**: v0.35
 - **作成日**: 2025-08-07
 - **更新日**: 2025-01-10
 - **言語**: JavaScript (ES6)
 - **ライセンス**: MIT
 
 ## 📋 更新履歴
+
+### v0.35 (2025-01-10)
+- README充実化（GitHub公開手順を詳細に記載）
+- デバッグ機能・グリッド機能の保護（削除禁止コメント追加）
+- プロジェクト名に日付を必須化
+- index.htmlに削除禁止エリアを明示
 
 ### v0.34 (2025-01-10)
 - グリッドトグルボタンのz-indexを高く設定

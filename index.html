@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal App Template v0.34</title>
+    <title>Universal App Template v0.35</title>
     
     <!-- カスタムスタイル -->
     <link rel="stylesheet" href="src/custom/styles.css">
@@ -179,14 +179,17 @@
     </style>
 </head>
 <body class="panel-mode">
+    <!-- ⚠️ 開発補助機能（削除禁止） -->
     <button class="mode-toggle" onclick="togglePanelMode()">📊 パネル表示</button>
     <button class="grid-toggle" onclick="toggleGridMode()">⊞ グリッド表示</button>
+    <!-- 開発補助機能ここまで -->
+    
     <div class="container">
-        <!-- パネル1: メイン(タイトル+ログイン) -->
+        <!-- ⚠️ パネル1: 認証（削除禁止） -->
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">📱 アプリテンプレート v0.34</h1>
+                <h1 class="app-title">📱 アプリテンプレート v0.35</h1>
                 <p class="app-subtitle">Firebase + Google認証対応 - 汎用データ管理</p>
             </div>
             <!-- 認証セクション -->
@@ -203,7 +206,7 @@
             </div>
         </div>
         
-        <!-- パネル2: データ入力 -->
+        <!-- パネル2: データ入力（カスタマイズ可能） -->
         <div class="section-panel panel-L hidden" id="userPanel">
             <span class="panel-number">[2-L]</span>
 
@@ -254,17 +257,18 @@
             </div>
         </div>
 
+        <!-- ⚠️ パネル3: ログ（削除禁止） -->
         <div class="section-panel panel-L">
             <span class="panel-number">[3-L]</span>
             <h3>📋 アプリログ <button class="universal-copy-btn" onclick="copyLogs()" style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 12px;">📋 ログをコピー</button></h3>
             <div class="data-area" id="logArea">
-            アプリテンプレート v0.34 起動完了...<br>
+            アプリテンプレート v0.35 起動完了...<br>
             🔥 Firebase設定完了<br>
             🔐 Google認証準備完了<br>
             </div>
         </div>
         
-        <!-- デバッグボタンエリア -->
+        <!-- ⚠️ パネル4: デバッグボタン（削除禁止） -->
         <div class="section-panel panel-L" style="margin-top: 8px; text-align: center;">
             <span class="panel-number">[4-L]</span>
             <button class="universal-copy-btn" onclick="debugFirebaseConnection()" style="background: #ff6b6b; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🔍 Firebase Debug</button>
