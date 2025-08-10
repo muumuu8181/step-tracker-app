@@ -58,23 +58,60 @@ git push -u origin main
 
 ---
 
-## 📂 編集可能ファイル
+## 🔢 バージョン管理ルール
 
-### ✅ 触ってOK（カスタマイズ領域）
-- `project-settings.json` - アプリ全体の設定
-- `src/custom/app-config.js` - アプリ動作設定  
-- `src/custom/styles.css` - デザイン
-- `index.html` の以下の部分のみ：
-  - タイトル（`<h1>`の中身）
-  - データ入力部分（パネル2の中身）
-  - **⚠️ パネル1（認証）、パネル3（ログ）、パネル4（デバッグ）は絶対に削除しない**
+### 初回公開
+- **v0.1** でスタート
 
-### ❌ 触るな（壊れる）
-- `src/services/` - 認証・DB機能
-- `src/components/` - 共通部品  
-- Firebase設定部分
-- **グリッド/パネル表示ボタン**（開発補助機能なので残す）
-- **デバッグボタン群**（開発時に必要）
+### 修正時
+- **+0.01** ずつ上げる
+- 例：v0.1 → v0.11 → v0.12 → v0.13...
+
+### 更新箇所（3つ）
+1. `index.html` の `<title>` と `<h1>`
+2. `README.md` のバージョン表記
+3. `package.json` の version
+
+---
+
+## 🎨 カスタマイズガイド（重要！）
+
+### 🔒 固定領域（触るな）
+```
+パネル1 [1-L]: ログイン機能
+パネル3 [3-L]: デバッグログ  
+パネル4 [4-L]: デバッグボタン
+グリッド/パネル表示ボタン
+```
+
+### ✨ 自由領域（好きにデザインしてOK！）
+```
+パネル2 [2-L]: データ入力エリア
+└── この中は完全自由！
+    - レイアウト変更OK
+    - 独自のデザインOK
+    - 新機能追加OK
+    - 色・フォント・アニメーション何でもOK
+```
+
+### 💡 カスタマイズ例
+```html
+<!-- パネル2の中身を完全に入れ替え -->
+<div class="section-panel panel-L hidden" id="userPanel">
+    <!-- ここから下を自由に書き換え！ -->
+    <div class="my-awesome-design">
+        <div class="fancy-cards">...</div>
+        <div class="cool-animations">...</div>
+    </div>
+    <!-- ここまで -->
+</div>
+```
+
+### 📝 編集ファイル
+- `project-settings.json` - アプリ設定
+- `src/custom/app-config.js` - 動作設定  
+- `src/custom/styles.css` - **ここでデザインを大胆に変更！**
+- `index.html` - パネル2の中身のみ
 
 ---
 
