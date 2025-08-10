@@ -1,4 +1,4 @@
-# 🚀 Universal App Template v0.25 - クイックスタートガイド
+# 🚀 Universal App Template v0.2.2 - クイックスタートガイド
 
 ## 📌 はじめに
 このテンプレートを使って、**Git干渉なし**で新しいプロジェクトを始められます。
@@ -135,7 +135,7 @@ git push -u origin main
 - 個人情報はFirebaseサーバー側で保護
 - アプリコードに個人データは含まれません
 
-## 📁 プロジェクト構造（v0.22）
+## 📁 プロジェクト構造（v0.2.2）
 
 ### 🔧 最小限のフォルダ構成
 
@@ -155,25 +155,26 @@ git push -u origin main
 
 | フォルダ | 役割 | 編集可否 | 説明 |
 |---------|------|---------|------|
-| **components/** | UIコンポーネント | ❌ **触るな** | 共通UIパーツ（認証、データベース連携済み） |
-| **services/** | Firebase連携 | ❌ **触るな** | 認証・データベース・ログ機能の中核 |
-| **features/** | 機能モジュール | ⚠️ **要相談** | アプリ固有の機能（慎重に編集） |
-| **custom/** | カスタム設定 | ✅ **自由編集OK** | デザイン・色・ボタン設定など |
-| **scripts/** | 起動スクリプト | ⚠️ **要相談** | サーバー起動・セットアップ用 |
-| **examples/** | サンプルコード | ✅ **参考用** | 実装例・使い方のサンプル |
+| **components/** | UIコンポーネント | ❌ **触るな** | 共通UIパーツ（common/にButton, Card, Modal等） |
+| **services/** | データサービス | ❌ **触るな** | auth.js, database.js, crud.js, data-manager.js, logger.js |
+| **features/** | 機能モジュール | ⚠️ **要相談** | アプリ固有の機能（main.js） |
+| **custom/** | カスタム設定 | ✅ **自由編集OK** | app-config.js, styles.css, loader.js, templates/ |
+| **scripts/** | 起動スクリプト | ⚠️ **要相談** | setup.sh, start-server.bat等 |
+| **examples/** | サンプルコード | ✅ **参考用** | simple-button-app.html, data-storage-usage.js |
 | **core-legacy/** | 旧コア | ❌ **触るな** | 旧バージョンの参照用（編集不要） |
 
 ### 🚫 絶対に触ってはいけないファイル
 
 ```
 src/
-├── components/        # ❌ Firebase連携済みのUIコンポーネント
-│   ├── auth.js       # Google認証
-│   ├── database.js   # データベース接続
+├── components/        # ❌ UIコンポーネント群
+│   ├── common/       # 汎用UIコンポーネント
 │   └── ui.js         # UI基本機能
 ├── services/         # ❌ コアサービス群
 │   ├── auth.js       # 認証サービス
-│   ├── database.js   # DBサービス
+│   ├── database.js   # DBサービス（汎用化済み）
+│   ├── crud.js       # 汎用CRUD操作
+│   ├── data-manager.js # データ管理
 │   └── logger.js     # ログサービス
 ```
 
@@ -225,19 +226,25 @@ src/
 
 ## 🎯 開発情報
 
-- **バージョン**: v0.1
+- **バージョン**: v0.2.2
 - **作成日**: 2025-08-07
+- **更新日**: 2025-01-10
 - **言語**: JavaScript (ES6)
 - **ライセンス**: MIT
 
 ## 📋 更新履歴
 
-### v0.1 (2025-08-07)
+### v0.2.2 (2025-01-10)
+- 汎用データサービス実装（crud.js, data-manager.js）
+- DatabaseServiceの汎用化完了
+- コレクションベースのデータ管理対応
+- ドキュメント整備と構造改善
+
+### v0.2.0 (2025-08-07)
 - 汎用アプリテンプレートとしてリリース
 - Firebase + Google認証実装済み
 - データ記録・履歴表示機能
 - キーボード操作対応
-- タイミングボタンプリセット
 - Core/Custom分離構造
 - GitHub Pages デプロイ対応
 
