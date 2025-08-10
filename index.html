@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal App Template v0.30</title>
+    <title>Universal App Template v0.31</title>
     
     <!-- カスタムスタイル -->
     <link rel="stylesheet" href="src/custom/styles.css">
@@ -107,7 +107,7 @@
             background-image: 
                 linear-gradient(0deg, rgba(40,167,69,0.2) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(40,167,69,0.2) 1px, transparent 1px);
-            background-size: 3% 3%;
+            background-size: 30px 30px;
         }
         body.grid-mode .grid-overlay {
             position: fixed;
@@ -218,7 +218,7 @@
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">📱 アプリテンプレート v0.30</h1>
+                <h1 class="app-title">📱 アプリテンプレート v0.31</h1>
                 <p class="app-subtitle">Firebase + Google認証対応 - 汎用データ管理</p>
             </div>
             <!-- 認証セクション -->
@@ -290,26 +290,12 @@
             <span class="panel-number">[3-L]</span>
             <h3>📋 アプリログ <button class="universal-copy-btn" onclick="copyLogs()" style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 12px;">📋 ログをコピー</button></h3>
             <div class="data-area" id="logArea">
-            アプリテンプレート v0.30 起動完了...<br>
+            アプリテンプレート v0.31 起動完了...<br>
             🔥 Firebase設定完了<br>
             🔐 Google認証準備完了<br>
             </div>
         </div>
         
-        <!-- デバッグボタンエリア -->
-        <div class="section-panel panel-L" style="margin-top: 8px; text-align: center;">
-            <span class="panel-number">[4-L]</span>
-            <button class="universal-copy-btn" onclick="debugFirebaseConnection()" style="background: #ff6b6b; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🔍 Firebase Debug</button>
-            <button onclick="testGridAdjust()" style="background: #17a2b8; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">📐 Grid調整テスト</button>
-            <button class="universal-copy-btn" onclick="checkLoginIssues()" style="background: #ffc107; color: #212529; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">⚠️ ログイン問題診断</button>
-            <button class="universal-copy-btn" onclick="copyDebugInfo()" style="background: #17a2b8; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">📋 デバッグ情報をコピー</button>
-            <button class="universal-copy-btn" onclick="checkDatabaseStructure()" style="background: #6f42c1; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🏗️ DB構造確認</button>
-            <button class="universal-copy-btn" onclick="checkMobileSupport()" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">📱 モバイル診断</button>
-            <button class="universal-copy-btn" onclick="forceAuthCheck()" style="background: #fd7e14; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🔄 認証状態確認</button>
-            <button class="universal-copy-btn" onclick="checkFirebaseConfig()" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🔧 Firebase設定</button>
-            <button class="universal-copy-btn" onclick="testPopup()" style="background: #20c997; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🧪 ポップアップテスト</button>
-            <button class="universal-copy-btn" onclick="window.open('test-error.html', '_blank')" style="background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🚨 エラーテスト</button>
-        </div>
     </div>
 
     <script>
@@ -1028,24 +1014,30 @@ ${document.getElementById('logArea').innerText}`;
             // 20x20のグリッド番号を追加（横軸はA,B,C...）
             const columns = 'ABCDEFGHIJKLMNOPQRST'.split('');
             
-            // グリッド線を追加（33x33グリッド）
-            for (let i = 0; i <= 33; i++) {
+            // グリッド線を追加（30pxグリッド）
+            const gridSize = 30; // ピクセル単位
+            const maxCols = Math.ceil(window.innerWidth / gridSize);
+            const maxRows = Math.ceil(window.innerHeight / gridSize);
+            
+            for (let i = 0; i <= maxCols; i++) {
                 // 垂直線
                 const vLine = document.createElement('div');
                 vLine.style.position = 'absolute';
-                vLine.style.left = `${i * 3}%`;
+                vLine.style.left = `${i * gridSize}px`;
                 vLine.style.top = '0';
                 vLine.style.width = '1px';
                 vLine.style.height = '100%';
                 vLine.style.background = 'rgba(40,167,69,0.2)';
                 vLine.style.zIndex = '999998';
                 overlay.appendChild(vLine);
-                
+            }
+            
+            for (let i = 0; i <= maxRows; i++) {
                 // 水平線
                 const hLine = document.createElement('div');
                 hLine.style.position = 'absolute';
                 hLine.style.left = '0';
-                hLine.style.top = `${i * 3}%`;
+                hLine.style.top = `${i * gridSize}px`;
                 hLine.style.width = '100%';
                 hLine.style.height = '1px';
                 hLine.style.background = 'rgba(40,167,69,0.2)';
@@ -1053,15 +1045,15 @@ ${document.getElementById('logArea').innerText}`;
                 overlay.appendChild(hLine);
             }
             
-            // ラベルを追加（5グリッドごとに表示）
-            for (let row = 0; row <= 33; row += 5) {
-                for (let col = 0; col <= 33; col += 5) {
+            // ラベルを追加（すべてのグリッドに番号表示）
+            for (let row = 0; row <= 20; row++) {
+                for (let col = 0; col <= 20; col++) {
                     if (row === 0 || col === 0) {
                         const label = document.createElement('div');
                         label.className = 'grid-number';
                         label.style.position = 'absolute';
-                        label.style.left = `${col * 3}%`;
-                        label.style.top = `${row * 3}%`;
+                        label.style.left = `${col * gridSize}px`;
+                        label.style.top = `${row * gridSize}px`;
                         label.style.zIndex = '999999';
                         
                         if (row === 0 && col === 0) {
@@ -1069,16 +1061,14 @@ ${document.getElementById('logArea').innerText}`;
                             label.textContent = '';
                         } else if (row === 0 && col > 0) {
                             // 上部に列ラベル（A,B,C...）
-                            if (col <= 20) {
-                                label.textContent = columns[col - 1];
-                                label.style.left = `${col * 3 - 1.5}%`;
-                                label.style.top = '10px';
-                            }
+                            label.textContent = columns[col - 1];
+                            label.style.left = `${col * gridSize - 15}px`;
+                            label.style.top = '5px';
                         } else if (col === 0 && row > 0) {
                             // 左側に行番号（1,2,3...）
                             label.textContent = row.toString();
-                            label.style.left = '10px';
-                            label.style.top = `${row * 3 - 1.5}%`;
+                            label.style.left = '5px';
+                            label.style.top = `${row * gridSize - 15}px`;
                         }
                         overlay.appendChild(label);
                     }
@@ -1115,9 +1105,9 @@ ${document.getElementById('logArea').innerText}`;
             const endCol = match[3] ? match[3].charCodeAt(0) - 'A'.charCodeAt(0) + 1 : startCol;
             const endRow = match[4] ? parseInt(match[4]) : startRow;
             
-            // グリッド単位をピクセルに変換（画面の3%が1グリッド）
-            const gridWidth = window.innerWidth * 0.03;
-            const gridHeight = window.innerHeight * 0.03;
+            // グリッド単位をピクセルに変換（30pxが1グリッド）
+            const gridWidth = 30;
+            const gridHeight = 30;
             
             // 現在のスタイルを取得
             const currentStyle = window.getComputedStyle(element);
@@ -1147,8 +1137,8 @@ ${document.getElementById('logArea').innerText}`;
             }
             
             const rect = element.getBoundingClientRect();
-            const gridCol = Math.floor(rect.left / (window.innerWidth * 0.03));
-            const gridRow = Math.floor(rect.top / (window.innerHeight * 0.03));
+            const gridCol = Math.floor(rect.left / 30);
+            const gridRow = Math.floor(rect.top / 30);
             
             const colLetter = String.fromCharCode('A'.charCodeAt(0) + gridCol);
             const position = `${colLetter}${gridRow + 1}`;
@@ -1195,7 +1185,7 @@ ${document.getElementById('logArea').innerText}`;
             log('📐 === テスト終了 ===');
         };
         
-        log('🚀 アプリテンプレート v0.30 起動完了');
+        log('🚀 アプリテンプレート v0.31 起動完了');
         log('🔐 認証システム準備完了');
         
         // プロトコルチェック（自動診断）
