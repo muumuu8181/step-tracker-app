@@ -21,7 +21,12 @@ export class CustomLoader {
             '../components/common/Input.js',
             '../components/common/Modal.js',
             '../components/common/Card.js',
-            '../components/common/List.js'
+            '../components/common/List.js',
+            '../components/common/Panel.js',
+            '../components/common/Form.js',
+            '../components/common/Select.js',
+            '../components/common/Loading.js',
+            '../components/common/Alert.js'
         ];
         
         for (const module of modules) {
