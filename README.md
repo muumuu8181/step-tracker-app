@@ -135,36 +135,57 @@ git push -u origin main
 - 個人情報はFirebaseサーバー側で保護
 - アプリコードに個人データは含まれません
 
-## 📁 プロジェクト構造 - Core/Custom分離版
+## 📁 プロジェクト構造（v0.22）
 
-### 🔧 フォルダ構成
+### 🔧 最小限のフォルダ構成
 
 ```
-weight-management-app/
-├── core/                           # 🚫 触ってはいけない領域
-│   ├── .github/                   # GitHub Actions設定
-│   │   └── workflows/
-│   │       └── pages.yml          # GitHub Pages自動デプロイ
-│   ├── src/                       # Core Firebase設定
-│   │   └── firebase-config.js     # Firebase認証・DB設定
-│   └── universal-system/          # Universal Template システム
-├── custom/                         # ✅ 自由にカスタマイズ可能
-│   ├── app-config.js              # アプリ設定（色・ボタン・動作等）
-│   └── styles.css                 # カスタムCSS（デザイン全般）
-├── index.html                      # メインアプリファイル
-└── README.md                       # このファイル
+プロジェクト/
+├── index.html         # メインアプリファイル
+├── README.md          # このファイル
+├── package.json       # npm設定（必須）
+├── .gitignore         # Git設定（必須）
+├── _archive/          # 古いバックアップ（無視してOK）
+├── docs/              # すべてのドキュメント
+├── src/               # すべてのソースコード
+└── tests/             # テストファイル
 ```
 
-### 🚫 CORE フォルダ（触ってはいけない）
+### 📂 src/ フォルダ内の構成と編集可否
 
-- **🔥 Firebase設定** - 認証・データベース接続の核心部分（絶対変更禁止）
-- **⚙️ GitHub Actions** - 自動デプロイ設定（変更するとデプロイ失敗）
-- **🛠️ Universal System** - テンプレート基盤（Core変更は全体に影響）
+| フォルダ | 役割 | 編集可否 | 説明 |
+|---------|------|---------|------|
+| **components/** | UIコンポーネント | ❌ **触るな** | 共通UIパーツ（認証、データベース連携済み） |
+| **services/** | Firebase連携 | ❌ **触るな** | 認証・データベース・ログ機能の中核 |
+| **features/** | 機能モジュール | ⚠️ **要相談** | アプリ固有の機能（慎重に編集） |
+| **custom/** | カスタム設定 | ✅ **自由編集OK** | デザイン・色・ボタン設定など |
+| **scripts/** | 起動スクリプト | ⚠️ **要相談** | サーバー起動・セットアップ用 |
+| **examples/** | サンプルコード | ✅ **参考用** | 実装例・使い方のサンプル |
+| **core-legacy/** | 旧コア | ❌ **触るな** | 旧バージョンの参照用（編集不要） |
 
-### ✅ CUSTOM フォルダ（自由にカスタマイズ可能）
+### 🚫 絶対に触ってはいけないファイル
 
-- **🎨 app-config.js** - アプリ名・ボタン設定・動作設定
-- **🎨 styles.css** - カラーテーマ・フォント・レイアウト・ダークモード
+```
+src/
+├── components/        # ❌ Firebase連携済みのUIコンポーネント
+│   ├── auth.js       # Google認証
+│   ├── database.js   # データベース接続
+│   └── ui.js         # UI基本機能
+├── services/         # ❌ コアサービス群
+│   ├── auth.js       # 認証サービス
+│   ├── database.js   # DBサービス
+│   └── logger.js     # ログサービス
+```
+
+### ✅ 自由に編集できるファイル
+
+```
+src/
+├── custom/           # ✅ カスタマイズ領域
+│   ├── app-config.js # アプリ設定
+│   └── styles.css    # デザイン
+├── examples/         # ✅ サンプル（参考用）
+```
 
 ## 🔄 他のアプリに変更する方法
 
