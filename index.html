@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal App Template v0.26</title>
+    <title>Universal App Template v0.27</title>
     
     <!-- カスタムスタイル -->
     <link rel="stylesheet" href="src/custom/styles.css">
@@ -156,25 +156,26 @@
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">📱 アプリテンプレート v0.26</h1>
+                <h1 class="app-title">📱 アプリテンプレート v0.27</h1>
                 <p class="app-subtitle">Firebase + Google認証対応 - 汎用データ管理</p>
             </div>
             <!-- 認証セクション -->
             <div class="auth-section" id="authSection">
-            <h3>🔐 ログイン</h3>
-            <p>Googleアカウントでログインしてデータを保存・同期できます</p>
+                <h3>🔐 ログイン</h3>
+                <p>Googleアカウントでログインしてデータを保存・同期できます</p>
                 <button class="auth-button" onclick="handleGoogleLogin()">Googleでログイン</button>
             </div>
-        </div>
-        <!-- パネル2: ユーザー情報+データ入力 -->
-        <div class="section-panel panel-L hidden" id="userPanel">
-            <span class="panel-number">[2-L]</span>
-            <!-- ユーザー情報表示 -->
-            <div class="user-info section-panel panel-M" id="userInfo">
-                <span class="panel-number">[2.1-M]</span>
+            <!-- ユーザー情報表示 (ログイン後に表示) -->
+            <div class="user-info section-panel panel-M hidden" id="userInfo">
+                <span class="panel-number">[1.1-M]</span>
                 <span>👤 ログイン中: <span id="userName"></span></span>
                 <button class="logout-button" onclick="handleLogout()">ログアウト</button>
             </div>
+        </div>
+        
+        <!-- パネル2: データ入力 -->
+        <div class="section-panel panel-L hidden" id="userPanel">
+            <span class="panel-number">[2-L]</span>
 
             <!-- データ入力セクション -->
             <div class="weight-input" id="weightInput">
@@ -236,7 +237,7 @@
             <span class="panel-number">[3-L]</span>
             <h3>📋 アプリログ <button class="universal-copy-btn" onclick="copyLogs()" style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 12px;">📋 ログをコピー</button></h3>
             <div class="data-area" id="logArea">
-            アプリテンプレート v0.26 起動完了...<br>
+            アプリテンプレート v0.27 起動完了...<br>
             🔥 Firebase設定完了<br>
             🔐 Google認証準備完了<br>
             </div>
@@ -580,6 +581,7 @@
         // UI表示制御
         function showUserInterface(user) {
             document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('userInfo').classList.remove('hidden');
             document.getElementById('userPanel').classList.remove('hidden');
             document.getElementById('userName').textContent = user.displayName;
             
@@ -936,7 +938,7 @@ ${document.getElementById('logArea').innerText}`;
             }
         };
         
-        log('🚀 アプリテンプレート v0.26 起動完了');
+        log('🚀 アプリテンプレート v0.27 起動完了');
         log('🔐 認証システム準備完了');
         
         // プロトコルチェック（自動診断）
