@@ -1,5 +1,5 @@
 // Database Module  
-// 責務: Firebase Realtime Databaseとのデータ操作
+// 責務: Firebase Realtime Databaseとの汎用データ操作
 
 export class DatabaseService {
     constructor(firebaseDatabase, logger) {
@@ -7,8 +7,8 @@ export class DatabaseService {
         this.log = logger;
     }
 
-    // データ保存
-    async saveWeightData(userId, data) {
+    // 汎用データ保存
+    async saveData(userId, collection, data) {
         try {
             this.log('💾 データを保存中...');
             
@@ -19,17 +19,17 @@ export class DatabaseService {
                 minute: '2-digit' 
             });
             
-            const weightData = {
+            const saveData = {
                 ...data,
                 time: timeString,
                 timestamp: firebase.database.ServerValue.TIMESTAMP,
                 createdAt: now.toISOString()
             };
 
-            const userRef = this.database.ref(`users/${userId}/weights`);
-            await userRef.push(weightData);
+            const userRef = this.database.ref(`users/${userId}/${collection}`);
+            await userRef.push(saveData);
             
-            this.log(`✅ 保存完了: ${data.date} ${timeString} - ${data.value} ${data.timing ? `(${data.timing})` : ''}`);
+            this.log(`✅ 保存完了: ${collection} - ${JSON.stringify(data).substring(0, 50)}...`);
             return true;
         } catch (error) {
             this.log(`❌ 保存エラー: ${error.message}`);
@@ -37,11 +37,11 @@ export class DatabaseService {
         }
     }
 
-    // データ削除
-    async deleteWeightEntry(userId, entryId) {
+    // 汎用データ削除
+    async deleteData(userId, collection, entryId) {
         try {
-            this.log(`🗑️ データ削除中: ${entryId}`);
-            const entryRef = this.database.ref(`users/${userId}/weights/${entryId}`);
+            this.log(`🗑️ データ削除中: ${collection}/${entryId}`);
+            const entryRef = this.database.ref(`users/${userId}/${collection}/${entryId}`);
             await entryRef.remove();
             this.log(`✅ 削除完了: ${entryId}`);
         } catch (error) {
@@ -50,9 +50,9 @@ export class DatabaseService {
         }
     }
 
-    // データ読み込み（リアルタイム監視）
-    watchUserData(userId, onDataUpdate) {
-        const userRef = this.database.ref(`users/${userId}/weights`);
+    // 汎用データ読み込み（リアルタイム監視）
+    watchUserData(userId, collection, onDataUpdate) {
+        const userRef = this.database.ref(`users/${userId}/${collection}`);
         
         userRef.on('value', (snapshot) => {
             const data = snapshot.val();
@@ -60,20 +60,20 @@ export class DatabaseService {
             if (data) {
                 const entries = Object.entries(data)
                     .map(([key, value]) => ({ id: key, ...value }))
-                    .sort((a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date));
+                    .sort((a, b) => new Date(b.createdAt || b.timestamp) - new Date(a.createdAt || a.timestamp));
                 
-                this.log(`📈 履歴読み込み完了: ${entries.length}件`);
+                this.log(`📈 データ読み込み完了: ${entries.length}件`);
                 onDataUpdate(entries);
             } else {
-                this.log('📈 履歴: データなし');
+                this.log('📈 データなし');
                 onDataUpdate([]);
             }
         });
     }
 
     // 監視を停止
-    stopWatching(userId) {
-        const userRef = this.database.ref(`users/${userId}/weights`);
+    stopWatching(userId, collection) {
+        const userRef = this.database.ref(`users/${userId}/${collection}`);
         userRef.off();
     }
 
@@ -86,18 +86,18 @@ export class DatabaseService {
         return connected;
     }
 
-    // データベース構造確認
-    async checkDatabaseStructure(userId, userEmail) {
+    // 汎用データベース構造確認
+    async checkDatabaseStructure(userId, collection, userEmail) {
         this.log('🏗️ データベース構造確認中...');
         
         try {
-            const userRef = this.database.ref(`users/${userId}/weights`);
+            const userRef = this.database.ref(`users/${userId}/${collection}`);
             const snapshot = await userRef.once('value');
             const data = snapshot.val();
             
             if (data) {
                 const entries = Object.keys(data);
-                this.log(`📊 ユーザー(${userEmail})のデータ:`);
+                this.log(`📊 ユーザー(${userEmail})の${collection}データ:`);
                 this.log(`- 記録数: ${entries.length}件`);
                 return { count: entries.length, hasData: true };
             } else {
