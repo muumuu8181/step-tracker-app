@@ -54,9 +54,10 @@
 | ファイル名 | 説明 | 重要度 |
 |-----------|------|--------|
 | [AI_DEVELOPMENT_RULES.md](ai-development/AI_DEVELOPMENT_RULES.md) | AI開発の基本ルール | ⭐⭐⭐ |
-| [SUBAGENT_GUIDE.md](ai-development/SUBAGENT_GUIDE.md) | サブエージェント呼び出しガイド | ⭐⭐⭐ |
+| [AI_SPECIFIC_GUIDE.md](ai-development/AI_SPECIFIC_GUIDE.md) | Claude Code/Codex/Cursor別対応 | ⭐⭐⭐ |
+| [SUBAGENT_GUIDE.md](ai-development/SUBAGENT_GUIDE.md) | サブエージェント呼び出しガイド（Claude Code専用） | ⭐⭐⭐ |
 | [VERSION_RULES.md](ai-development/VERSION_RULES.md) | バージョン管理ルール（+0.01システム） | ⭐⭐⭐ |
-| [GITHUB_PUBLISH_GUIDE.md](ai-development/GITHUB_PUBLISH_GUIDE.md) | GitHub公開手順 | ⭐⭐⭐ |
+| [GITHUB_PUBLISH_GUIDE.md](ai-development/GITHUB_PUBLISH_GUIDE.md) | GitHub Pages Web公開手順 | ⭐⭐⭐ |
 
 ### 💬 ai-conversations/ - AI開発会話ログ
 - GPTやClaudeとの開発会話の記録（タイムスタンプ付き）
