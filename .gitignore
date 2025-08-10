@@ -43,4 +43,12 @@ yarn.lock
 # Temporary files
 *.tmp
 *.temp
-EOF < /dev/null
+
+# Archives and backups (may contain sensitive data)
+archive/
+*.backup
+*.bak
+
+# Firebase secrets
+*firebase-config-real*
+*firebase-config-prod*
