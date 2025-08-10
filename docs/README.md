@@ -5,8 +5,9 @@
 
 ### 📖 必ず読むべきドキュメント（順番通りに）
 1. **[プロジェクトREADME](../README.md)** - プロジェクト全体の概要
-2. **[使用方法ガイド](guides/HOW_TO_USE_TEMPLATE.md)** - テンプレートの基本的な使い方
-3. **[必須要件](guides/MANDATORY_REQUIREMENTS.md)** - 守るべきルールと制約
+2. **[AI開発ルール](ai-development/AI_DEVELOPMENT_RULES.md)** - ⚠️ **AI必読！サブエージェント使用ルール**
+3. **[使用方法ガイド](guides/HOW_TO_USE_TEMPLATE.md)** - テンプレートの基本的な使い方
+4. **[必須要件](guides/MANDATORY_REQUIREMENTS.md)** - 守るべきルールと制約
 
 ### 🚀 セットアップ手順（この順番で）
 1. **[Firebase設定ガイド](setup/FIREBASE_SETUP_GUIDE.md)** - Firebaseの初期設定
@@ -48,6 +49,14 @@
 
 ### 📜 history/ - 開発履歴
 - **[INCIDENT_REPORT.md](history/INCIDENT_REPORT.md)** - 過去の問題と解決策
+
+### 🤖 ai-development/ - AI開発ルール（NEW!）
+| ファイル名 | 説明 | 重要度 |
+|-----------|------|--------|
+| [AI_DEVELOPMENT_RULES.md](ai-development/AI_DEVELOPMENT_RULES.md) | AI開発の基本ルール | ⭐⭐⭐ |
+| [SUBAGENT_GUIDE.md](ai-development/SUBAGENT_GUIDE.md) | サブエージェント呼び出しガイド | ⭐⭐⭐ |
+| [VERSION_RULES.md](ai-development/VERSION_RULES.md) | バージョン管理ルール（+0.01システム） | ⭐⭐⭐ |
+| [GITHUB_PUBLISH_GUIDE.md](ai-development/GITHUB_PUBLISH_GUIDE.md) | GitHub公開手順 | ⭐⭐⭐ |
 
 ### 💬 ai-conversations/ - AI開発会話ログ
 - GPTやClaudeとの開発会話の記録（タイムスタンプ付き）

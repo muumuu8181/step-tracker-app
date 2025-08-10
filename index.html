@@ -1044,19 +1044,19 @@ ${document.getElementById('logArea').innerText}`;
                 overlay.appendChild(hLine);
             }
             
-            // ラベルを追加（5グリッドごとに表示）
-            for (let row = 0; row <= maxRows; row += 5) {
-                for (let col = 0; col <= maxCols; col += 5) {
+            // ラベルを追加（すべてのグリッドに表示）
+            for (let row = 0; row <= maxRows; row++) {
+                for (let col = 0; col <= maxCols; col++) {
                     if (row === 0 || col === 0) {
                         const label = document.createElement('div');
                         label.className = 'grid-number';
                         label.style.cssText = `
                             position: absolute;
-                            font-size: 11px;
+                            font-size: 10px;
                             color: rgba(40,167,69,0.9);
                             font-weight: bold;
                             background: rgba(255,255,255,0.95);
-                            padding: 2px 4px;
+                            padding: 1px 3px;
                             border-radius: 2px;
                             z-index: 999999;
                         `;
@@ -1064,13 +1064,13 @@ ${document.getElementById('logArea').innerText}`;
                         if (row === 0 && col > 0) {
                             // 上部に列ラベル（A,B,C...Z,AA,AB...）
                             label.textContent = getColumnLabel(col - 1);
-                            label.style.left = `${col * gridSize - 15}px`;
-                            label.style.top = '5px';
+                            label.style.left = `${col * gridSize - 10}px`;
+                            label.style.top = '2px';
                             overlay.appendChild(label);
                         } else if (col === 0 && row > 0) {
                             // 左側に行番号（1,2,3...100）
                             label.textContent = row.toString();
-                            label.style.left = '5px';
+                            label.style.left = '2px';
                             label.style.top = `${row * gridSize - 10}px`;
                             overlay.appendChild(label);
                         }
