@@ -245,9 +245,9 @@
                     <span class="panel-number">[2.1-M]</span>
                     <h3 style="margin-top: 0; margin-bottom: 8px;">📝 データを記録</h3>
                     <!-- 基本入力エリア（Sパネル統合） -->
-                    <div data-grid="B4-C4">
-                        <input type="date" class="input-field" id="dateInput" data-grid="B4">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;" data-grid="B5-C5">
+                    <div>
+                        <input type="date" class="input-field" id="dateInput">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
                             <input type="number" class="input-field" id="weightValue" placeholder="値を入力" step="0.1" min="0" max="999" value="50.0" style="flex: 1;" onkeydown="handleWeightKeypress(event)">
                             <span style="font-size: 11px; color: #666;">↑↓で調整</span>
                         </div>
@@ -271,8 +271,8 @@
                     <!-- メモと保存（統合） -->
                     <div class="section-panel panel-S" data-grid="B8-C8">
                         <span class="panel-number">[2.1.2-S]</span>
-                        <textarea class="input-field" id="memoInput" placeholder="メモ (オプション)" rows="2" data-grid="B8-C8"></textarea>
-                        <button class="save-button" onclick="saveWeightData()" style="margin-top: 10px;" data-grid="B9">💾 保存</button>
+                        <textarea class="input-field" id="memoInput" placeholder="メモ (オプション)" rows="2"></textarea>
+                        <button class="save-button" onclick="saveWeightData()" style="margin-top: 10px;">💾 保存</button>
                     </div>
                 </div>
             
@@ -1166,18 +1166,18 @@ ${document.getElementById('logArea').innerText}`;
         window.testGridAdjust = () => {
             log('📐 === グリッド調整テスト開始 ===');
             
-            // B4-C4の要素を見つけて調整
-            const testElement = document.querySelector('[data-grid="B4-C4"]');
+            // パネルレベルの要素を見つけて調整
+            const testElement = document.querySelector('[data-grid="B3"]');
             if (testElement) {
-                log('🎯 B4-C4要素を発見');
+                log('🎯 B3パネル要素を発見');
                 
                 // 元のサイズを記録
                 const originalWidth = testElement.offsetWidth;
                 const originalHeight = testElement.offsetHeight;
                 log(`📏 元のサイズ: ${originalWidth}x${originalHeight}px`);
                 
-                // 0.5グリッド分短くする
-                adjustGridPosition('[data-grid="B4-C4"]', 'B4', -0.5);
+                // 0.5グリッド分調整
+                adjustGridPosition('[data-grid="B3"]', 'B3', -0.5);
                 
                 // 新しいサイズを確認
                 const newWidth = testElement.offsetWidth;
@@ -1187,13 +1187,13 @@ ${document.getElementById('logArea').innerText}`;
                 
                 // 3秒後に元に戻す
                 setTimeout(() => {
-                    adjustGridPosition('[data-grid="B4-C4"]', 'B4', 0.5);
+                    adjustGridPosition('[data-grid="B3"]', 'B3', 0.5);
                     log('🔄 元のサイズに復元しました');
                 }, 3000);
                 
                 log('⏱️ 3秒後に自動的に元のサイズに戻ります');
             } else {
-                log('❌ B4-C4要素が見つかりません');
+                log('❌ B3パネル要素が見つかりません');
                 log('💡 グリッド表示をONにして、要素の位置を確認してください');
             }
             
