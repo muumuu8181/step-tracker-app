@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal App Template v0.27</title>
+    <title>Universal App Template v0.28</title>
     
     <!-- カスタムスタイル -->
     <link rel="stylesheet" href="src/custom/styles.css">
@@ -84,6 +84,61 @@
         .mode-toggle:hover {
             background: #0056b3;
         }
+        .grid-toggle {
+            position: fixed;
+            top: 10px;
+            right: 150px;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .grid-toggle:hover {
+            background: #218838;
+        }
+        
+        /* グリッド表示モード */
+        body.grid-mode .container {
+            position: relative;
+            background-image: 
+                linear-gradient(0deg, rgba(0,123,255,0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,123,255,0.2) 1px, transparent 1px);
+            background-size: 5% 5%;
+        }
+        body.grid-mode .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+        body.grid-mode .grid-number {
+            position: absolute;
+            font-size: 10px;
+            color: rgba(0,123,255,0.5);
+            font-weight: bold;
+        }
+        body.grid-mode *[data-grid] {
+            position: relative;
+        }
+        body.grid-mode *[data-grid]::before {
+            content: attr(data-grid);
+            position: absolute;
+            top: -15px;
+            left: 0;
+            background: #ffc107;
+            color: black;
+            padding: 2px 5px;
+            font-size: 10px;
+            border-radius: 3px;
+            z-index: 100;
+        }
         
         /* スマホ対応 */
         @media (max-width: 768px) {
@@ -151,12 +206,13 @@
 </head>
 <body class="panel-mode">
     <button class="mode-toggle" onclick="togglePanelMode()">📊 パネル表示</button>
+    <button class="grid-toggle" onclick="toggleGridMode()">⊞ グリッド表示</button>
     <div class="container">
         <!-- パネル1: メイン(タイトル+ログイン) -->
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">📱 アプリテンプレート v0.27</h1>
+                <h1 class="app-title">📱 アプリテンプレート v0.28</h1>
                 <p class="app-subtitle">Firebase + Google認証対応 - 汎用データ管理</p>
             </div>
             <!-- 認証セクション -->
@@ -179,26 +235,21 @@
 
             <!-- データ入力セクション -->
             <div class="weight-input" id="weightInput">
-                <div class="input-card section-panel panel-M">
-                    <span class="panel-number">[2.2-M]</span>
-                <h3 style="margin-top: 0; margin-bottom: 8px;">📝 データを記録</h3>
-                    <!-- 日付入力 -->
-                    <div class="section-panel panel-S">
-                        <span class="panel-number">[2.2.1-S]</span>
-                        <input type="date" class="input-field" id="dateInput">
-                    </div>
-                    <!-- 値入力 -->
-                    <div class="section-panel panel-S">
-                        <span class="panel-number">[2.2.2-S]</span>
-                        <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="input-card section-panel panel-M" data-grid="R3-C2">
+                    <span class="panel-number">[2.1-M]</span>
+                    <h3 style="margin-top: 0; margin-bottom: 8px;">📝 データを記録</h3>
+                    <!-- 基本入力エリア（Sパネル統合） -->
+                    <div data-grid="R4-C2-3">
+                        <input type="date" class="input-field" id="dateInput" data-grid="R4-C2">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;" data-grid="R5-C2-3">
                             <input type="number" class="input-field" id="weightValue" placeholder="値を入力" step="0.1" min="0" max="999" value="50.0" style="flex: 1;" onkeydown="handleWeightKeypress(event)">
                             <span style="font-size: 11px; color: #666;">↑↓で調整</span>
                         </div>
                     </div>
                 
                     <!-- タイミング選択パネル -->
-                    <div class="timing-panel section-panel panel-S">
-                        <span class="panel-number">[2.2.3-S]</span>
+                    <div class="timing-panel section-panel panel-S" data-grid="R6-C2-4">
+                        <span class="panel-number">[2.1.1-S]</span>
                     <div class="timing-buttons">
                         <button type="button" class="timing-btn" onclick="selectTiming('起床後')" data-timing="起床後" style="background: #55a3ff;">🛏️ 起床後</button>
                         <button type="button" class="timing-btn" onclick="selectTiming('トイレ前')" data-timing="トイレ前" style="background: #81ecec;">🚽 トイレ前</button>
@@ -211,20 +262,16 @@
                     <input type="text" class="input-field" id="selectedTiming" placeholder="選択されたタイミング" readonly style="margin-top: 4px; background: #ffffff; font-size: 12px; padding: 6px; text-align: center;">
                 </div>
                 
-                    <!-- メモ入力 -->
-                    <div class="section-panel panel-S">
-                        <span class="panel-number">[2.2.4-S]</span>
-                        <textarea class="input-field" id="memoInput" placeholder="メモ (オプション)" rows="2"></textarea>
-                    </div>
-                    <!-- 保存ボタン -->
-                    <div class="section-panel panel-S">
-                        <span class="panel-number">[2.2.5-S]</span>
-                        <button class="save-button" onclick="saveWeightData()">💾 保存</button>
+                    <!-- メモと保存（統合） -->
+                    <div class="section-panel panel-S" data-grid="R8-C2-3">
+                        <span class="panel-number">[2.1.2-S]</span>
+                        <textarea class="input-field" id="memoInput" placeholder="メモ (オプション)" rows="2" data-grid="R8-C2-3"></textarea>
+                        <button class="save-button" onclick="saveWeightData()" style="margin-top: 10px;" data-grid="R9-C2">💾 保存</button>
                     </div>
                 </div>
             
-                <div class="input-card section-panel panel-M">
-                    <span class="panel-number">[2.3-M]</span>
+                <div class="input-card section-panel panel-M" data-grid="R10-C2">
+                    <span class="panel-number">[2.2-M]</span>
                 <h3>📈 記録履歴</h3>
                 <div class="data-area" id="weightHistory">
                     データを読み込み中...<br>
@@ -237,7 +284,7 @@
             <span class="panel-number">[3-L]</span>
             <h3>📋 アプリログ <button class="universal-copy-btn" onclick="copyLogs()" style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 12px;">📋 ログをコピー</button></h3>
             <div class="data-area" id="logArea">
-            アプリテンプレート v0.27 起動完了...<br>
+            アプリテンプレート v0.28 起動完了...<br>
             🔥 Firebase設定完了<br>
             🔐 Google認証準備完了<br>
             </div>
@@ -938,7 +985,62 @@ ${document.getElementById('logArea').innerText}`;
             }
         };
         
-        log('🚀 アプリテンプレート v0.27 起動完了');
+        // グリッドモード切り替え
+        window.toggleGridMode = () => {
+            document.body.classList.toggle('grid-mode');
+            const btn = document.querySelector('.grid-toggle');
+            if (document.body.classList.contains('grid-mode')) {
+                btn.textContent = '⊞ グリッド表示';
+                log('⊞ グリッド表示モード: ON');
+                createGridOverlay();
+            } else {
+                btn.textContent = '□ 通常表示';
+                log('□ グリッド表示モード: OFF');
+                removeGridOverlay();
+            }
+        };
+        
+        // グリッドオーバーレイ作成
+        function createGridOverlay() {
+            const container = document.querySelector('.container');
+            if (!container) return;
+            
+            // 既存のオーバーレイを削除
+            removeGridOverlay();
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'grid-overlay';
+            overlay.id = 'gridOverlay';
+            
+            // 20x20のグリッド番号を追加
+            for (let row = 1; row <= 20; row++) {
+                for (let col = 1; col <= 20; col++) {
+                    if (row === 1 || col === 1) {
+                        const label = document.createElement('div');
+                        label.className = 'grid-number';
+                        label.style.left = `${(col - 1) * 5}%`;
+                        label.style.top = `${(row - 1) * 5}%`;
+                        if (row === 1 && col === 1) {
+                            label.textContent = '';
+                        } else if (row === 1) {
+                            label.textContent = col.toString();
+                        } else if (col === 1) {
+                            label.textContent = row.toString();
+                        }
+                        overlay.appendChild(label);
+                    }
+                }
+            }
+            
+            container.appendChild(overlay);
+        }
+        
+        function removeGridOverlay() {
+            const overlay = document.getElementById('gridOverlay');
+            if (overlay) overlay.remove();
+        }
+        
+        log('🚀 アプリテンプレート v0.28 起動完了');
         log('🔐 認証システム準備完了');
         
         // プロトコルチェック（自動診断）
