@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal App Template v0.25</title>
+    <title>Universal App Template v0.26</title>
     
     <!-- カスタムスタイル -->
     <link rel="stylesheet" href="src/custom/styles.css">
@@ -20,8 +20,8 @@
         body { font-family: Arial, sans-serif; padding: 5px; background: #f5f5f5; }
         .container { max-width: 800px; margin: 0 auto; background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         
-        /* パネル番号スタイル */
-        .section-panel {
+        /* パネル表示モード切り替え */
+        body.panel-mode .section-panel {
             position: relative;
             border: 3px solid #007bff;
             border-radius: 8px;
@@ -30,7 +30,8 @@
             background: white;
             box-shadow: 0 2px 5px rgba(0,123,255,0.2);
         }
-        .panel-number {
+        body.panel-mode .panel-number {
+            display: block;
             position: absolute;
             top: -15px;
             left: 15px;
@@ -41,6 +42,47 @@
             font-size: 16px;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        
+        /* 通常モード */
+        body:not(.panel-mode) .section-panel {
+            position: relative;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        body:not(.panel-mode) .panel-number {
+            display: none;
+        }
+        
+        /* 階層サイズ */
+        .panel-L { /* 大 */ }
+        .panel-M { /* 中 */
+            padding: 15px !important;
+            border-width: 2px !important;
+        }
+        .panel-S { /* 小 */
+            padding: 10px !important;
+            border-width: 1px !important;
+            margin: 5px 0 !important;
+        }
+        
+        /* モード切り替えボタン */
+        .mode-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .mode-toggle:hover {
+            background: #0056b3;
         }
         
         /* スマホ対応 */
@@ -107,30 +149,32 @@
         .user-info { background: #d4edda; color: #155724; padding: 6px; border-radius: 5px; margin-bottom: 8px; }
     </style>
 </head>
-<body>
+<body class="panel-mode">
+    <button class="mode-toggle" onclick="togglePanelMode()">📊 パネル表示</button>
     <div class="container">
         <div class="app-header">
             <h1 class="app-title">📱 アプリテンプレート v0.25</h1>
             <p class="app-subtitle">Firebase + Google認証対応 - 汎用データ管理</p>
         </div>
         <!-- 認証セクション -->
-        <div class="auth-section section-panel" id="authSection">
-            <span class="panel-number">[1]</span>
+        <div class="auth-section section-panel panel-L" id="authSection">
+            <span class="panel-number">[1-L]</span>
             <h3>🔐 ログイン</h3>
             <p>Googleアカウントでログインしてデータを保存・同期できます</p>
             <button class="auth-button" onclick="handleGoogleLogin()">Googleでログイン</button>
         </div>
         <!-- ユーザー情報表示 -->
-        <div class="user-info hidden section-panel" id="userInfo">
-            <span class="panel-number">[2]</span>
+        <div class="user-info hidden section-panel panel-M" id="userInfo">
+            <span class="panel-number">[2-M]</span>
             <span>👤 ログイン中: <span id="userName"></span></span>
             <button class="logout-button" onclick="handleLogout()">ログアウト</button>
         </div>
 
         <!-- データ入力セクション -->
-        <div class="weight-input hidden section-panel" id="weightInput">
-            <span class="panel-number">[3]</span>
-            <div class="input-card">
+        <div class="weight-input hidden section-panel panel-L" id="weightInput">
+            <span class="panel-number">[2-L]</span>
+            <div class="input-card section-panel panel-M">
+                <span class="panel-number">[2.1-M]</span>
                 <h3 style="margin-top: 0; margin-bottom: 8px;">📝 データを記録</h3>
                 <input type="date" class="input-field" id="dateInput">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -139,7 +183,8 @@
                 </div>
                 
                 <!-- タイミング選択パネル -->
-                <div class="timing-panel">
+                <div class="timing-panel section-panel panel-S">
+                    <span class="panel-number">[2.1.1-S]</span>
                     <div class="timing-buttons">
                         <button type="button" class="timing-btn" onclick="selectTiming('起床後')" data-timing="起床後" style="background: #55a3ff;">🛏️ 起床後</button>
                         <button type="button" class="timing-btn" onclick="selectTiming('トイレ前')" data-timing="トイレ前" style="background: #81ecec;">🚽 トイレ前</button>
@@ -156,7 +201,8 @@
                 <button class="save-button" onclick="saveWeightData()">💾 保存</button>
             </div>
             
-            <div class="input-card">
+            <div class="input-card section-panel panel-M">
+                <span class="panel-number">[2.2-M]</span>
                 <h3>📈 記録履歴</h3>
                 <div class="data-area" id="weightHistory">
                     データを読み込み中...<br>
@@ -164,19 +210,19 @@
             </div>
         </div>
 
-        <div class="section-panel">
-            <span class="panel-number">[4]</span>
+        <div class="section-panel panel-L">
+            <span class="panel-number">[3-L]</span>
             <h3>📋 アプリログ <button class="universal-copy-btn" onclick="copyLogs()" style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 12px;">📋 ログをコピー</button></h3>
             <div class="data-area" id="logArea">
-            アプリテンプレート v0.25 起動完了...<br>
+            アプリテンプレート v0.26 起動完了...<br>
             🔥 Firebase設定完了<br>
             🔐 Google認証準備完了<br>
             </div>
         </div>
         
         <!-- デバッグボタンエリア -->
-        <div class="section-panel" style="margin-top: 8px; text-align: center;">
-            <span class="panel-number">[5]</span>
+        <div class="section-panel panel-L" style="margin-top: 8px; text-align: center;">
+            <span class="panel-number">[4-L]</span>
             <button class="universal-copy-btn" onclick="debugFirebaseConnection()" style="background: #ff6b6b; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🔍 Firebase Debug</button>
             <button class="universal-copy-btn" onclick="checkLoginIssues()" style="background: #ffc107; color: #212529; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">⚠️ ログイン問題診断</button>
             <button class="universal-copy-btn" onclick="copyDebugInfo()" style="background: #17a2b8; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">📋 デバッグ情報をコピー</button>
@@ -857,7 +903,20 @@ ${document.getElementById('logArea').innerText}`;
         };
 
         // 初期化
-        log('🚀 アプリテンプレート v0.24 起動完了');
+        // パネルモード切り替え
+        window.togglePanelMode = () => {
+            document.body.classList.toggle('panel-mode');
+            const btn = document.querySelector('.mode-toggle');
+            if (document.body.classList.contains('panel-mode')) {
+                btn.textContent = '📊 パネル表示';
+                log('📊 パネル表示モード: ON');
+            } else {
+                btn.textContent = '📄 通常表示';
+                log('📄 パネル表示モード: OFF');
+            }
+        };
+        
+        log('🚀 アプリテンプレート v0.26 起動完了');
         log('🔐 認証システム準備完了');
         
         // プロトコルチェック（自動診断）
