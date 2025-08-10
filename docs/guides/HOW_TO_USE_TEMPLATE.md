@@ -2,7 +2,7 @@
 
 ## 📋 このテンプレートについて
 
-体重管理アプリv0.26をベースにした汎用アプリテンプレートです。
+Universal App Template v0.2.2 - 汎用アプリテンプレートです。
 Firebase + Google認証が既に設定済みで、すぐに開発を開始できます。
 
 ### ✨ 特徴
@@ -18,8 +18,8 @@ Firebase + Google認証が既に設定済みで、すぐに開発を開始でき
 ### 1️⃣ テンプレートをコピー
 ```bash
 # 日付-プロジェクト名でコピー
-cp -r weight-management-template 2025-08-07-my-new-app
-cd 2025-08-07-my-new-app
+cp -r 0000-00-00-project-template 2025-01-10-my-new-app
+cd 2025-01-10-my-new-app
 ```
 
 ### 2️⃣ Git初期化（重要！）
@@ -53,22 +53,25 @@ git commit -m "Initial commit from template"
 ## 📁 フォルダ構造
 
 ```
-weight-management-template/
+0000-00-00-project-template/
 ├── index.html              # メインHTML（編集対象）
-├── core/                   # コアシステム（触らない）
-│   ├── src/
-│   │   ├── firebase-config.js
-│   │   └── copy-system.js
-│   └── universal-system/
-├── custom/                 # カスタマイズ部分（編集OK）
-│   ├── app-config.js      # アプリ設定
-│   └── styles.css         # スタイル
-└── tools/                  # ツール類
+├── src/
+│   ├── services/          # データサービス（触らない）
+│   │   ├── auth.js
+│   │   ├── database.js
+│   │   ├── crud.js
+│   │   └── data-manager.js
+│   ├── custom/            # カスタマイズ部分（編集OK）
+│   │   ├── app-config.js
+│   │   ├── styles.css
+│   │   └── templates/
+│   └── components/        # UIコンポーネント
+└── docs/                   # ドキュメント
 ```
 
 ### ⚠️ 重要な注意
-- **core/**フォルダは変更禁止
-- **custom/**フォルダは自由に編集可能
+- **src/services/**フォルダは変更禁止
+- **src/custom/**フォルダは自由に編集可能
 - **Firebase設定**は自動で動作
 
 ---
@@ -90,12 +93,18 @@ weight-management-template/
 
 ### 例1: TODOアプリに変更
 ```javascript
-// 体重入力部分をTODO入力に変更
-<div class="input-card">
-    <h3>新しいタスク</h3>
-    <input type="text" id="taskInput" placeholder="タスクを入力">
-    <button onclick="addTask()">追加</button>
-</div>
+// CRUDServiceを使用してTODOデータを管理
+import { CRUDService } from './src/services/crud.js';
+
+const crud = new CRUDService(firebase.database());
+
+// TODO追加
+async function addTodo(userId, title) {
+    await crud.create(userId, 'todos', {
+        title: title,
+        completed: false
+    });
+}
 ```
 
 ### 例2: メモアプリに変更

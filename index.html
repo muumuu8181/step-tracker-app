@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal App Template v0.28</title>
+    <title>Universal App Template v0.29</title>
     
     <!-- カスタムスタイル -->
     <link rel="stylesheet" href="src/custom/styles.css">
@@ -110,19 +110,25 @@
             background-size: 5% 5%;
         }
         body.grid-mode .grid-overlay {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 10000;
+            z-index: 999999;
         }
         body.grid-mode .grid-number {
             position: absolute;
-            font-size: 10px;
-            color: rgba(40,167,69,0.5);
+            font-size: 11px;
+            color: rgba(40,167,69,0.9);
             font-weight: bold;
+            background: rgba(255,255,255,0.95);
+            padding: 2px 4px;
+            border-radius: 2px;
+            border: 1px solid rgba(40,167,69,0.3);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            z-index: 999999;
         }
         body.grid-mode *[data-grid] {
             position: relative;
@@ -212,7 +218,7 @@
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">📱 アプリテンプレート v0.28</h1>
+                <h1 class="app-title">📱 アプリテンプレート v0.29</h1>
                 <p class="app-subtitle">Firebase + Google認証対応 - 汎用データ管理</p>
             </div>
             <!-- 認証セクション -->
@@ -235,20 +241,20 @@
 
             <!-- データ入力セクション -->
             <div class="weight-input" id="weightInput">
-                <div class="input-card section-panel panel-M" data-grid="R3-C2">
+                <div class="input-card section-panel panel-M" data-grid="B3">
                     <span class="panel-number">[2.1-M]</span>
                     <h3 style="margin-top: 0; margin-bottom: 8px;">📝 データを記録</h3>
                     <!-- 基本入力エリア（Sパネル統合） -->
-                    <div data-grid="R4-C2-3">
-                        <input type="date" class="input-field" id="dateInput" data-grid="R4-C2">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;" data-grid="R5-C2-3">
+                    <div data-grid="B4-C4">
+                        <input type="date" class="input-field" id="dateInput" data-grid="B4">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;" data-grid="B5-C5">
                             <input type="number" class="input-field" id="weightValue" placeholder="値を入力" step="0.1" min="0" max="999" value="50.0" style="flex: 1;" onkeydown="handleWeightKeypress(event)">
                             <span style="font-size: 11px; color: #666;">↑↓で調整</span>
                         </div>
                     </div>
                 
                     <!-- タイミング選択パネル -->
-                    <div class="timing-panel section-panel panel-S" data-grid="R6-C2-4">
+                    <div class="timing-panel section-panel panel-S" data-grid="B6-D6">
                         <span class="panel-number">[2.1.1-S]</span>
                     <div class="timing-buttons">
                         <button type="button" class="timing-btn" onclick="selectTiming('起床後')" data-timing="起床後" style="background: #55a3ff;">🛏️ 起床後</button>
@@ -263,14 +269,14 @@
                 </div>
                 
                     <!-- メモと保存（統合） -->
-                    <div class="section-panel panel-S" data-grid="R8-C2-3">
+                    <div class="section-panel panel-S" data-grid="B8-C8">
                         <span class="panel-number">[2.1.2-S]</span>
-                        <textarea class="input-field" id="memoInput" placeholder="メモ (オプション)" rows="2" data-grid="R8-C2-3"></textarea>
-                        <button class="save-button" onclick="saveWeightData()" style="margin-top: 10px;" data-grid="R9-C2">💾 保存</button>
+                        <textarea class="input-field" id="memoInput" placeholder="メモ (オプション)" rows="2" data-grid="B8-C8"></textarea>
+                        <button class="save-button" onclick="saveWeightData()" style="margin-top: 10px;" data-grid="B9">💾 保存</button>
                     </div>
                 </div>
             
-                <div class="input-card section-panel panel-M" data-grid="R10-C2">
+                <div class="input-card section-panel panel-M" data-grid="B10">
                     <span class="panel-number">[2.2-M]</span>
                 <h3>📈 記録履歴</h3>
                 <div class="data-area" id="weightHistory">
@@ -284,7 +290,7 @@
             <span class="panel-number">[3-L]</span>
             <h3>📋 アプリログ <button class="universal-copy-btn" onclick="copyLogs()" style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 12px;">📋 ログをコピー</button></h3>
             <div class="data-area" id="logArea">
-            アプリテンプレート v0.28 起動完了...<br>
+            アプリテンプレート v0.29 起動完了...<br>
             🔥 Firebase設定完了<br>
             🔐 Google認証準備完了<br>
             </div>
@@ -990,11 +996,13 @@ ${document.getElementById('logArea').innerText}`;
             document.body.classList.toggle('grid-mode');
             const btn = document.querySelector('.grid-toggle');
             if (document.body.classList.contains('grid-mode')) {
-                btn.textContent = '⊞ グリッド表示';
+                btn.textContent = '□ グリッドOFF';
+                btn.style.background = '#dc3545';
                 log('⊞ グリッド表示モード: ON');
                 createGridOverlay();
             } else {
-                btn.textContent = '□ 通常表示';
+                btn.textContent = '⊞ グリッド表示';
+                btn.style.background = '#28a745';
                 log('□ グリッド表示モード: OFF');
                 removeGridOverlay();
             }
@@ -1002,37 +1010,79 @@ ${document.getElementById('logArea').innerText}`;
         
         // グリッドオーバーレイ作成
         function createGridOverlay() {
-            const container = document.querySelector('.container');
-            if (!container) return;
-            
             // 既存のオーバーレイを削除
             removeGridOverlay();
             
             const overlay = document.createElement('div');
             overlay.className = 'grid-overlay';
             overlay.id = 'gridOverlay';
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.pointerEvents = 'none';
+            overlay.style.zIndex = '999999';
             
-            // 20x20のグリッド番号を追加
-            for (let row = 1; row <= 20; row++) {
-                for (let col = 1; col <= 20; col++) {
-                    if (row === 1 || col === 1) {
+            // 20x20のグリッド番号を追加（横軸はA,B,C...）
+            const columns = 'ABCDEFGHIJKLMNOPQRST'.split('');
+            
+            // グリッド線を追加
+            for (let i = 0; i <= 20; i++) {
+                // 垂直線
+                const vLine = document.createElement('div');
+                vLine.style.position = 'absolute';
+                vLine.style.left = `${i * 5}%`;
+                vLine.style.top = '0';
+                vLine.style.width = '1px';
+                vLine.style.height = '100%';
+                vLine.style.background = 'rgba(40,167,69,0.3)';
+                vLine.style.zIndex = '999998';
+                overlay.appendChild(vLine);
+                
+                // 水平線
+                const hLine = document.createElement('div');
+                hLine.style.position = 'absolute';
+                hLine.style.left = '0';
+                hLine.style.top = `${i * 5}%`;
+                hLine.style.width = '100%';
+                hLine.style.height = '1px';
+                hLine.style.background = 'rgba(40,167,69,0.3)';
+                hLine.style.zIndex = '999998';
+                overlay.appendChild(hLine);
+            }
+            
+            // ラベルを追加
+            for (let row = 0; row <= 20; row++) {
+                for (let col = 0; col <= 20; col++) {
+                    if (row === 0 || col === 0) {
                         const label = document.createElement('div');
                         label.className = 'grid-number';
-                        label.style.left = `${(col - 1) * 5}%`;
-                        label.style.top = `${(row - 1) * 5}%`;
-                        if (row === 1 && col === 1) {
+                        label.style.position = 'absolute';
+                        label.style.left = `${col * 5}%`;
+                        label.style.top = `${row * 5}%`;
+                        label.style.zIndex = '999999';
+                        
+                        if (row === 0 && col === 0) {
+                            // 左上コーナーは空
                             label.textContent = '';
-                        } else if (row === 1) {
-                            label.textContent = col.toString();
-                        } else if (col === 1) {
+                        } else if (row === 0 && col > 0) {
+                            // 上部に列ラベル（A,B,C...）
+                            label.textContent = columns[col - 1];
+                            label.style.left = `${col * 5 - 2.5}%`;
+                            label.style.top = '10px';
+                        } else if (col === 0 && row > 0) {
+                            // 左側に行番号（1,2,3...）
                             label.textContent = row.toString();
+                            label.style.left = '10px';
+                            label.style.top = `${row * 5 - 2.5}%`;
                         }
                         overlay.appendChild(label);
                     }
                 }
             }
             
-            container.appendChild(overlay);
+            document.body.appendChild(overlay);
         }
         
         function removeGridOverlay() {
@@ -1040,7 +1090,71 @@ ${document.getElementById('logArea').innerText}`;
             if (overlay) overlay.remove();
         }
         
-        log('🚀 アプリテンプレート v0.28 起動完了');
+        // グリッド位置調整ヘルパー関数
+        window.adjustGridPosition = (selector, gridCode, adjustment) => {
+            // gridCode例: "B4-C" (列B, 行4-C範囲)
+            // adjustment例: 0.5 (0.5グリッド分短く/小さく)
+            const element = document.querySelector(selector);
+            if (!element) {
+                log(`❌ 要素が見つかりません: ${selector}`);
+                return;
+            }
+            
+            // グリッドコードの解析 (例: "B4" → 列B(2), 行4)
+            const match = gridCode.match(/^([A-T])(\d+)(?:-([A-T])?(\d+)?)?$/);
+            if (!match) {
+                log(`❌ 無効なグリッドコード: ${gridCode}`);
+                return;
+            }
+            
+            const startCol = match[1].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+            const startRow = parseInt(match[2]);
+            const endCol = match[3] ? match[3].charCodeAt(0) - 'A'.charCodeAt(0) + 1 : startCol;
+            const endRow = match[4] ? parseInt(match[4]) : startRow;
+            
+            // グリッド単位をピクセルに変換（画面の5%が1グリッド）
+            const gridWidth = window.innerWidth * 0.05;
+            const gridHeight = window.innerHeight * 0.05;
+            
+            // 現在のスタイルを取得
+            const currentStyle = window.getComputedStyle(element);
+            const currentWidth = parseFloat(currentStyle.width);
+            const currentHeight = parseFloat(currentStyle.height);
+            
+            // 調整を適用
+            if (adjustment < 0) {
+                // マイナス調整 = 短く/小さく
+                element.style.width = `${currentWidth + (adjustment * gridWidth)}px`;
+                element.style.height = `${currentHeight + (adjustment * gridHeight)}px`;
+            } else {
+                // プラス調整 = 長く/大きく
+                element.style.width = `${currentWidth + (adjustment * gridWidth)}px`;
+                element.style.height = `${currentHeight + (adjustment * gridHeight)}px`;
+            }
+            
+            log(`✅ グリッド調整完了: ${selector} @ ${gridCode} (${adjustment > 0 ? '+' : ''}${adjustment}グリッド)`);
+        };
+        
+        // グリッド位置取得ヘルパー関数
+        window.getGridPosition = (selector) => {
+            const element = document.querySelector(selector);
+            if (!element) {
+                log(`❌ 要素が見つかりません: ${selector}`);
+                return null;
+            }
+            
+            const rect = element.getBoundingClientRect();
+            const gridCol = Math.floor(rect.left / (window.innerWidth * 0.05));
+            const gridRow = Math.floor(rect.top / (window.innerHeight * 0.05));
+            
+            const colLetter = String.fromCharCode('A'.charCodeAt(0) + gridCol);
+            const position = `${colLetter}${gridRow + 1}`;
+            
+            log(`📍 グリッド位置: ${selector} → ${position}`);
+            return position;
+        };
+        
+        log('🚀 アプリテンプレート v0.29 起動完了');
         log('🔐 認証システム準備完了');
         
         // プロトコルチェック（自動診断）

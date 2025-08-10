@@ -87,11 +87,11 @@ cp -r src/custom/templates/todo-app/* src/custom/
 
 ```javascript
 // src/custom/templates/todo-app/data-handler.js
-import { CRUDService } from '../../services/crud.js';
+import { CRUDService } from '../../../services/crud.js';
 
 export class TodoDataHandler {
-    constructor(userId) {
-        this.crud = new CRUDService(firebase.database());
+    constructor(userId, database) {
+        this.crud = new CRUDService(database);
         this.userId = userId;
         this.collection = 'todos';
     }

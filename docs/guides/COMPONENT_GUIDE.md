@@ -8,16 +8,16 @@
 - **Modal.js** - モーダルダイアログ
 - **Card.js** - カードコンテナ
 - **List.js** - リスト表示
-- **Panel.js** - パネルコンテナ（v0.25追加）
-- **Form.js** - フォーム生成（v0.25追加）
-- **Select.js** - セレクトボックス（v0.25追加）
-- **Loading.js** - ローディング表示（v0.25追加）
-- **Alert.js** - アラート表示（v0.25追加）
+- **Panel.js** - パネルコンテナ（v0.2.2）
+- **Form.js** - フォーム生成（v0.2.2）
+- **Select.js** - セレクトボックス（v0.2.2）
+- **Loading.js** - ローディング表示（v0.2.2）
+- **Alert.js** - アラート表示（v0.2.2）
 
 ### 使用例
 
 ```javascript
-import { Button } from '../components/common/Button.js';
+import { Button } from '../../components/common/Button.js';
 
 const myButton = new Button({
     text: 'Click Me',
@@ -76,9 +76,11 @@ export class TodoItem {
         return completeBtn.render().outerHTML;
     }
     
-    complete() {
+    async complete() {
         this.todo.completed = true;
-        // データベース更新処理
+        // CRUDServiceを使用したデータベース更新
+        const crud = new CRUDService(firebase.database());
+        await crud.update(userId, 'todos', this.todo.id, { completed: true });
     }
     
     render() {
@@ -90,8 +92,8 @@ export class TodoItem {
 ## カスタムローダーの使用
 
 ```javascript
-// src/custom/loader.js
-import { CustomLoader } from './loader.js';
+// src/custom/loader.jsを使用
+import { CustomLoader } from './src/custom/loader.js';
 
 const loader = new CustomLoader();
 
