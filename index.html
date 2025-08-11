@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal App Template v0.37</title>
+    <title>Awesome Paint Studio v0.1</title>
     
     <!-- iPhoneホーム画面用の設定 -->
     <link rel="apple-touch-icon" href="icon-180.png">
@@ -149,7 +149,7 @@
             flex-wrap: wrap; 
             justify-content: center;
         }
-        .timing-btn { 
+        .timing-btn, .tool-btn { 
             background: #6c757d; 
             color: white; 
             border: none; 
@@ -160,13 +160,26 @@
             transition: all 0.2s;
             min-width: 70px;
             text-align: center;
+            margin: 2px;
         }
-        .timing-btn:hover {
+        .timing-btn:hover, .tool-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
-        .timing-btn.selected {
+        .timing-btn.selected, .tool-btn.active {
             transform: scale(1.1);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.8);
+            border: 2px solid #fff;
+        }
+        .brush-tools {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        #paintCanvas {
+            box-shadow: 0 0 30px rgba(255, 0, 128, 0.3);
         }
         
         @media (max-width: 768px) {
@@ -199,8 +212,8 @@
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">📱 アプリテンプレート v0.37</h1>
-                <p class="app-subtitle">Firebase + Google認証対応 - 汎用データ管理</p>
+                <h1 class="app-title">🎨 Awesome Paint Studio v0.1</h1>
+                <p class="app-subtitle">最高にかっこいい音響付きペイントスタジオ</p>
             </div>
             <!-- 認証セクション -->
             <div class="auth-section" id="authSection">
@@ -216,52 +229,61 @@
             </div>
         </div>
         
-        <!-- パネル2: データ入力（カスタマイズ可能） -->
+        <!-- パネル2: ペイントスタジオ（カスタマイズ領域） -->
         <div class="section-panel panel-L hidden" id="userPanel">
             <span class="panel-number">[2-L]</span>
 
-            <!-- データ入力セクション -->
-            <div class="weight-input" id="weightInput">
-                <div class="input-card section-panel panel-M" data-grid="B3">
+            <!-- ペイントツール -->
+            <div class="paint-tools" id="paintTools">
+                <div class="tool-panel section-panel panel-M" data-grid="B3">
                     <span class="panel-number">[2.1-M]</span>
-                    <h3 style="margin-top: 0; margin-bottom: 8px;">📝 データを記録</h3>
-                    <!-- 基本入力エリア（Sパネル統合） -->
-                    <div>
-                        <input type="date" class="input-field" id="dateInput">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
-                            <input type="number" class="input-field" id="weightValue" placeholder="値を入力" step="0.1" min="0" max="999" value="50.0" style="flex: 1;" onkeydown="handleWeightKeypress(event)">
-                            <span style="font-size: 11px; color: #666;">↑↓で調整</span>
+                    <h3 style="margin-top: 0; margin-bottom: 8px;">🎨 Awesome Paint Studio</h3>
+                    
+                    <!-- ツール選択 -->
+                    <div class="brush-tools">
+                        <button type="button" class="tool-btn active" onclick="selectTool('brush')" data-tool="brush" style="background: #ff0080;">🖌️ ブラシ</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('pencil')" data-tool="pencil" style="background: #00ffff;">✏️ ペンシル</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('spray')" data-tool="spray" style="background: #ff8000;">🎨 スプレー</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('glow')" data-tool="glow" style="background: #ffff00;">✨ グロー</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('neon')" data-tool="neon" style="background: #80ff00;">💫 ネオン</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('particle')" data-tool="particle" style="background: #ff0040;">🌟 パーティクル</button>
+                    </div>
+                    
+                    <!-- コントロールパネル -->
+                    <div class="controls section-panel panel-S" data-grid="B6-D6">
+                        <span class="panel-number">[2.1.1-S]</span>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <div>
+                                <label>🖌️ サイズ: <span id="brushSizeDisplay">10</span></label>
+                                <input type="range" id="brushSize" min="1" max="50" value="10" style="width: 100px;">
+                            </div>
+                            <div>
+                                <label>🎨 カラー:</label>
+                                <input type="color" id="colorPicker" value="#ff0080" style="width: 40px; height: 30px;">
+                            </div>
+                            <div>
+                                <label>💧 透明度: <span id="opacityDisplay">100%</span></label>
+                                <input type="range" id="opacity" min="0" max="100" value="100" style="width: 100px;">
+                            </div>
                         </div>
                     </div>
-                
-                    <!-- タイミング選択パネル -->
-                    <div class="timing-panel section-panel panel-S" data-grid="B6-D6">
-                        <span class="panel-number">[2.1.1-S]</span>
-                    <div class="timing-buttons">
-                        <button type="button" class="timing-btn" onclick="selectTiming('起床後')" data-timing="起床後" style="background: #55a3ff;">🛏️ 起床後</button>
-                        <button type="button" class="timing-btn" onclick="selectTiming('トイレ前')" data-timing="トイレ前" style="background: #81ecec;">🚽 トイレ前</button>
-                        <button type="button" class="timing-btn" onclick="selectTiming('トイレ後')" data-timing="トイレ後" style="background: #74b9ff;">🚽 トイレ後</button>
-                        <button type="button" class="timing-btn" onclick="selectTiming('風呂前')" data-timing="風呂前" style="background: #fd79a8;">🛁 風呂前</button>
-                        <button type="button" class="timing-btn" onclick="selectTiming('風呂後')" data-timing="風呂後" style="background: #00b894;">🛀 風呂後</button>
-                        <button type="button" class="timing-btn" onclick="selectTiming('食事前')" data-timing="食事前" style="background: #e84393;">🍽️ 食事前</button>
-                        <button type="button" class="timing-btn" onclick="selectTiming('食事後')" data-timing="食事後" style="background: #a29bfe;">🍽️ 食事後</button>
-                    </div>
-                    <input type="text" class="input-field" id="selectedTiming" placeholder="選択されたタイミング" readonly style="margin-top: 4px; background: #ffffff; font-size: 12px; padding: 6px; text-align: center;">
                 </div>
                 
-                    <!-- メモと保存（統合） -->
-                    <div class="section-panel panel-S" data-grid="B8-C8">
-                        <span class="panel-number">[2.1.2-S]</span>
-                        <textarea class="input-field" id="memoInput" placeholder="メモ (オプション)" rows="2"></textarea>
-                        <button class="save-button" onclick="saveWeightData()" style="margin-top: 10px;">💾 保存</button>
-                    </div>
-                </div>
-            
-                <div class="input-card section-panel panel-M" data-grid="B10">
+                <!-- キャンバス -->
+                <div class="canvas-container section-panel panel-M" data-grid="B8">
                     <span class="panel-number">[2.2-M]</span>
-                <h3>📈 記録履歴</h3>
-                <div class="data-area" id="weightHistory">
-                    データを読み込み中...<br>
+                    <div style="text-align: center; background: #000011; padding: 10px; border-radius: 10px;">
+                        <canvas id="paintCanvas" width="600" height="400" 
+                            style="border: 2px solid #ff0080; border-radius: 8px; background: #000022; cursor: crosshair;">
+                        </canvas>
+                    </div>
+                    
+                    <!-- アクションボタン -->
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button onclick="clearCanvas()" style="background: #ff4444; color: white; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🗑️ クリア</button>
+                        <button onclick="savePainting()" style="background: #00ff80; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🎨 作品保存</button>
+                        <button onclick="downloadPainting()" style="background: #ffff00; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">💾 ダウンロード</button>
+                        <input type="text" id="paintingTitle" placeholder="作品タイトル" style="margin: 5px; padding: 8px; border-radius: 5px; border: 1px solid #ff0080;">
                     </div>
                 </div>
             </div>
@@ -622,16 +644,328 @@
             document.getElementById('userPanel').classList.remove('hidden');
             document.getElementById('userName').textContent = user.displayName;
             
-            // 今日の日付とデフォルト値を設定
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('dateInput').value = today;
-            document.getElementById('weightValue').value = '50.0';
+            // ペイントキャンバス初期化
+            setTimeout(() => {
+                initPaintCanvas();
+            }, 100);
+        }
+
+        // ===============================================
+        // 🎨 ペイント機能（基本実装）
+        // ===============================================
+        let canvas = null;
+        let ctx = null;
+        let isDrawing = false;
+        let currentTool = 'brush';
+        let currentColor = '#ff0080';
+        let currentSize = 10;
+        let currentOpacity = 1.0;
+        let particles = [];
+        
+        // ペイント機能初期化
+        function initPaintCanvas() {
+            canvas = document.getElementById('paintCanvas');
+            if (!canvas) return;
             
-            // タイミングボタンの初期状態設定
-            document.querySelectorAll('.timing-btn').forEach(btn => {
-                btn.style.opacity = '0.7';
-                btn.classList.remove('selected');
+            ctx = canvas.getContext('2d');
+            
+            // イベントリスナー設定
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // タッチイベント（スマホ対応）
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+            
+            // コントロールイベント
+            document.getElementById('brushSize').addEventListener('input', updateBrushSize);
+            document.getElementById('colorPicker').addEventListener('input', updateColor);
+            document.getElementById('opacity').addEventListener('input', updateOpacity);
+            
+            // パーティクルアニメーション開始
+            animateParticles();
+            
+            log('🎨 ペイントキャンバス初期化完了');
+        }
+        
+        // 描画開始
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getMousePos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+            
+            // 音響効果
+            playSound('brush');
+        }
+        
+        // 描画中
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const pos = getMousePos(e);
+            
+            switch(currentTool) {
+                case 'brush':
+                    drawBrush(pos.x, pos.y);
+                    break;
+                case 'pencil':
+                    drawPencil(pos.x, pos.y);
+                    break;
+                case 'spray':
+                    drawSpray(pos.x, pos.y);
+                    break;
+                case 'glow':
+                    drawGlow(pos.x, pos.y);
+                    break;
+                case 'neon':
+                    drawNeon(pos.x, pos.y);
+                    break;
+                case 'particle':
+                    drawParticle(pos.x, pos.y);
+                    break;
+            }
+        }
+        
+        // 描画停止
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+        
+        // マウス座標取得
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: (e.clientX || e.touches[0].clientX) - rect.left,
+                y: (e.clientY || e.touches[0].clientY) - rect.top
+            };
+        }
+        
+        // タッチイベント処理
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
             });
+            canvas.dispatchEvent(mouseEvent);
+        }
+        
+        // ツール選択
+        window.selectTool = (tool) => {
+            currentTool = tool;
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-tool="${tool}"]`).classList.add('active');
+            log(`🖌️ ツール選択: ${tool}`);
+        };
+        
+        // ブラシサイズ更新
+        function updateBrushSize() {
+            currentSize = parseInt(document.getElementById('brushSize').value);
+            document.getElementById('brushSizeDisplay').textContent = currentSize;
+        }
+        
+        // カラー更新
+        function updateColor() {
+            currentColor = document.getElementById('colorPicker').value;
+        }
+        
+        // 透明度更新
+        function updateOpacity() {
+            currentOpacity = parseInt(document.getElementById('opacity').value) / 100;
+            document.getElementById('opacityDisplay').textContent = Math.round(currentOpacity * 100) + '%';
+        }
+        
+        // 基本ブラシ描画
+        function drawBrush(x, y) {
+            ctx.globalAlpha = currentOpacity;
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = currentSize;
+            ctx.lineCap = 'round';
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+        
+        // ペンシル描画
+        function drawPencil(x, y) {
+            ctx.globalAlpha = currentOpacity;
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = Math.max(1, currentSize / 3);
+            ctx.lineCap = 'round';
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+        
+        // スプレー描画
+        function drawSpray(x, y) {
+            ctx.globalAlpha = currentOpacity * 0.6;
+            ctx.fillStyle = currentColor;
+            
+            for (let i = 0; i < currentSize; i++) {
+                const offsetX = (Math.random() - 0.5) * currentSize * 2;
+                const offsetY = (Math.random() - 0.5) * currentSize * 2;
+                ctx.fillRect(x + offsetX, y + offsetY, 1, 1);
+            }
+        }
+        
+        // グロー効果
+        function drawGlow(x, y) {
+            ctx.globalAlpha = currentOpacity;
+            ctx.shadowColor = currentColor;
+            ctx.shadowBlur = currentSize * 2;
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = currentSize;
+            ctx.lineCap = 'round';
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+        
+        // ネオン効果
+        function drawNeon(x, y) {
+            // 外側のグロー
+            ctx.globalAlpha = currentOpacity * 0.3;
+            ctx.shadowColor = currentColor;
+            ctx.shadowBlur = currentSize * 3;
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = currentSize * 2;
+            ctx.lineCap = 'round';
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            // 内側の明るい線
+            ctx.globalAlpha = currentOpacity;
+            ctx.shadowBlur = currentSize;
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = currentSize / 2;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+        
+        // パーティクル効果
+        function drawParticle(x, y) {
+            // パーティクルを追加
+            for (let i = 0; i < 5; i++) {
+                particles.push({
+                    x: x + (Math.random() - 0.5) * 20,
+                    y: y + (Math.random() - 0.5) * 20,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    life: 1.0,
+                    color: currentColor,
+                    size: Math.random() * currentSize / 2
+                });
+            }
+        }
+        
+        // パーティクルアニメーション
+        function animateParticles() {
+            // パーティクル更新
+            particles.forEach((particle, index) => {
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                particle.life -= 0.02;
+                particle.size *= 0.98;
+                
+                if (particle.life <= 0) {
+                    particles.splice(index, 1);
+                } else {
+                    ctx.globalAlpha = particle.life * currentOpacity;
+                    ctx.fillStyle = particle.color;
+                    ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+                }
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        
+        // キャンバスクリア
+        window.clearCanvas = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles = [];
+            playSound('clear');
+            log('🗑️ キャンバスをクリアしました');
+        };
+        
+        // 作品保存（Firebase）
+        window.savePainting = async () => {
+            if (!currentUser) {
+                log('❌ ログインが必要です');
+                return;
+            }
+            
+            const title = document.getElementById('paintingTitle').value || '無題の作品';
+            const imageData = canvas.toDataURL();
+            
+            try {
+                const paintingData = {
+                    title: title,
+                    canvasData: imageData,
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    userEmail: currentUser.email,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP,
+                    createdAt: new Date().toISOString()
+                };
+                
+                const userRef = database.ref(`users/${currentUser.uid}/paintings`);
+                await userRef.push(paintingData);
+                
+                playSound('save');
+                log(`✅ 作品保存完了: ${title}`);
+                document.getElementById('paintingTitle').value = '';
+            } catch (error) {
+                log(`❌ 保存エラー: ${error.message}`);
+            }
+        };
+        
+        // 作品ダウンロード
+        window.downloadPainting = () => {
+            const title = document.getElementById('paintingTitle').value || 'awesome-painting';
+            const link = document.createElement('a');
+            link.download = `${title}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            log(`💾 作品ダウンロード: ${title}.png`);
+        };
+        
+        // 音響効果
+        function playSound(type) {
+            try {
+                // Web Audio APIを使用した簡単な音生成
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                switch(type) {
+                    case 'brush':
+                        oscillator.frequency.value = 220;
+                        gainNode.gain.value = 0.05;
+                        break;
+                    case 'save':
+                        oscillator.frequency.value = 440;
+                        gainNode.gain.value = 0.1;
+                        break;
+                    case 'clear':
+                        oscillator.frequency.value = 110;
+                        gainNode.gain.value = 0.05;
+                        break;
+                }
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch (e) {
+                // 音響が使えない場合は無視
+            }
         }
 
         function showLoginInterface() {

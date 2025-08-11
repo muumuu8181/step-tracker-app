@@ -6,15 +6,15 @@
     "version": "0.35"
   },
   "app": {
-    "name": "アプリテンプレート",
-    "nameEn": "App Template",
-    "description": "Firebase + Google認証対応の汎用アプリテンプレート",
-    "version": "0.35",
+    "name": "Awesome Paint Studio",
+    "nameEn": "Awesome Paint Studio",
+    "description": "最高にかっこいい音響付きペイントスタジオ",
+    "version": "0.1",
     "author": "",
     "license": "MIT"
   },
   "database": {
-    "collection": "data",
+    "collection": "paintings",
     "subCollections": [],
     "structure": {
       "timestamp": "number",
@@ -24,14 +24,14 @@
     }
   },
   "ui": {
-    "primaryColor": "#667eea",
-    "secondaryColor": "#764ba2",
+    "primaryColor": "#ff0080",
+    "secondaryColor": "#8000ff",
     "dangerColor": "#dc3545",
-    "successColor": "#28a745",
-    "warningColor": "#ffc107",
-    "infoColor": "#17a2b8",
+    "successColor": "#00ff80",
+    "warningColor": "#ffff00",
+    "infoColor": "#00ffff",
     "buttons": {
-      "save": "💾 保存",
+      "save": "🎨 作品保存",
       "delete": "🗑️ 削除",
       "edit": "✏️ 編集",
       "cancel": "❌ キャンセル",
@@ -39,12 +39,12 @@
       "logout": "ログアウト"
     },
     "labels": {
-      "date": "日付",
-      "value": "値",
-      "memo": "メモ",
-      "timing": "タイミング"
+      "brushSize": "ブラシサイズ",
+      "color": "カラー",
+      "title": "作品タイトル",
+      "effect": "エフェクト"
     },
-    "defaultValue": 50.0,
+    "defaultValue": 10.0,
     "gridSize": 30,
     "panelMode": true,
     "gridMode": false
