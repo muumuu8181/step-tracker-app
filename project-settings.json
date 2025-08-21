@@ -3,13 +3,13 @@
     "name": "universal-app-template",
     "created": "2025-01-10T00:00:00.000Z",
     "template": "custom",
-    "version": "2.01"
+    "version": "0.41"
   },
   "app": {
     "name": "Universal App Template",
     "nameEn": "Universal App Template",
     "description": "よっぽどの馬鹿でも使える万能アプリテンプレート",
-    "version": "2.01",
+    "version": "1.0.0",
     "author": "",
     "license": "MIT"
   },
@@ -44,7 +44,7 @@
       "title": "タイトル",
       "type": "タイプ"
     },
-    "defaultValue": 10.0,
+    "defaultValue": 10,
     "gridSize": 30,
     "panelMode": true,
     "gridMode": false

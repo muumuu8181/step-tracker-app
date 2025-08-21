@@ -1,8 +1,10 @@
 {
   "name": "universal-template-system",
-  "description": "よっぽどの馬鹿でも使えるUniversalテンプレートシステム - カップラーメン方式",
+  "description": "よっぽどの馬鹿でも使える万能アプリテンプレート - カップラーメン方式",
   "main": "universal-system/core/universal-template.js",
   "scripts": {
+    "version:update": "node tools/version/update.js",
+    "cleanup:paint": "node tools/cleanup/remove-paint-artifacts.js",
     "init:profile": "node tools/profile/apply.js",
     "check:unused": "knip && ts-prune && depcruise -v .dependency-cruiser.cjs",
     "test": "vitest run",
@@ -43,7 +45,7 @@
   "bugs": {
     "url": "https://github.com/muumuu8181/0000-00-00-project-template/issues"
   },
-  "version": "2.01",
+  "version": "0.41",
   "directories": {
     "doc": "docs",
     "test": "tests"

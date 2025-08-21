@@ -171,14 +171,14 @@
             box-shadow: 0 0 20px rgba(255, 0, 128, 0.8);
             border: 2px solid #fff;
         }
-        .brush-tools {
+        .app-tools {
             display: flex;
             gap: 5px;
             flex-wrap: wrap;
             justify-content: center;
             margin: 10px 0;
         }
-        #paintCanvas {
+        #appCanvas {
             box-shadow: 0 0 30px rgba(255, 0, 128, 0.3);
         }
         
@@ -212,7 +212,7 @@
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">📱 Universal App Template v2.01</h1>
+                <h1 class="app-title">📱 Universal App Template v0.41</h1>
                 <p class="app-subtitle">よっぽどの馬鹿でも使える万能アプリテンプレート</p>
             </div>
             <!-- 認証セクション -->
@@ -233,20 +233,20 @@
         <div class="section-panel panel-L hidden" id="userPanel">
             <span class="panel-number">[2-L]</span>
 
-            <!-- アプリツール -->
+            <!-- 汎用ツール -->
             <div class="app-tools" id="appTools">
                 <div class="tool-panel section-panel panel-M" data-grid="B3">
                     <span class="panel-number">[2.1-M]</span>
                     <h3 style="margin-top: 0; margin-bottom: 8px;">📱 Universal App Template</h3>
                     
                     <!-- ツール選択 -->
-                    <div class="brush-tools">
-                        <button type="button" class="tool-btn active" onclick="selectTool('brush')" data-tool="brush" style="background: #ff0080;">🖌️ ブラシ</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('pencil')" data-tool="pencil" style="background: #00ffff;">✏️ ペンシル</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('spray')" data-tool="spray" style="background: #ff8000;">🎨 スプレー</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('glow')" data-tool="glow" style="background: #ffff00;">✨ グロー</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('neon')" data-tool="neon" style="background: #80ff00;">💫 ネオン</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('particle')" data-tool="particle" style="background: #ff0040;">🌟 パーティクル</button>
+                    <div class="app-tools">
+                        <button type="button" class="tool-btn active" onclick="selectTool('tool1')" data-tool="tool1" style="background: #ff0080;">🔧 ツール1</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('tool2')" data-tool="tool2" style="background: #00ffff;">⚙️ ツール2</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('tool3')" data-tool="tool3" style="background: #ff8000;">🛠️ ツール3</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('tool4')" data-tool="tool4" style="background: #ffff00;">📐 ツール4</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('tool5')" data-tool="tool5" style="background: #80ff00;">📏 ツール5</button>
+                        <button type="button" class="tool-btn" onclick="selectTool('tool6')" data-tool="tool6" style="background: #ff0040;">🔩 ツール6</button>
                     </div>
                     
                     <!-- コントロールパネル -->
@@ -254,12 +254,12 @@
                         <span class="panel-number">[2.1.1-S]</span>
                         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                             <div>
-                                <label>🖌️ サイズ: <span id="brushSizeDisplay">10</span></label>
-                                <input type="range" id="brushSize" min="1" max="50" value="10" style="width: 100px;">
+                                <label>📏 サイズ: <span id="itemSizeDisplay">10</span></label>
+                                <input type="range" id="itemSize" min="1" max="50" value="10" style="width: 100px;">
                             </div>
                             <div>
-                                <label>🎨 カラー:</label>
-                                <input type="color" id="colorPicker" value="#ff0080" style="width: 40px; height: 30px;">
+                                <label>🎨 設定:</label>
+                                <input type="color" id="optionPicker" value="#ff0080" style="width: 40px; height: 30px;">
                             </div>
                             <div>
                                 <label>💧 透明度: <span id="opacityDisplay">100%</span></label>
@@ -273,16 +273,16 @@
                 <div class="canvas-container section-panel panel-M" data-grid="B8">
                     <span class="panel-number">[2.2-M]</span>
                     <div style="text-align: center; background: #000011; padding: 10px; border-radius: 10px;">
-                        <canvas id="paintCanvas" width="600" height="400" 
+                        <canvas id="appCanvas" width="600" height="400" 
                             style="border: 2px solid #ff0080; border-radius: 8px; background: #000022; cursor: crosshair;">
                         </canvas>
                     </div>
                     
                     <!-- アクションボタン -->
                     <div style="text-align: center; margin-top: 10px;">
-                        <button onclick="clearCanvas()" style="background: #ff4444; color: white; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🗑️ クリア</button>
+                        <button onclick="clearData()" style="background: #ff4444; color: white; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🗑️ リセット</button>
                         <button onclick="saveData()" style="background: #00ff80; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">💾 データ保存</button>
-                        <button onclick="downloadPainting()" style="background: #ffff00; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">💾 ダウンロード</button>
+                        <button onclick="downloadData()" style="background: #ffff00; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">📤 エクスポート</button>
                         <input type="text" id="paintingTitle" placeholder="作品タイトル" style="margin: 5px; padding: 8px; border-radius: 5px; border: 1px solid #ff0080;">
                     </div>
                 </div>
@@ -664,7 +664,7 @@
         
         // ペイント機能初期化
         function initPaintCanvas() {
-            canvas = document.getElementById('paintCanvas');
+            canvas = document.getElementById('appCanvas');
             if (!canvas) return;
             
             ctx = canvas.getContext('2d');
@@ -681,8 +681,8 @@
             canvas.addEventListener('touchend', stopDrawing);
             
             // コントロールイベント
-            document.getElementById('brushSize').addEventListener('input', updateBrushSize);
-            document.getElementById('colorPicker').addEventListener('input', updateColor);
+            document.getElementById('itemSize').addEventListener('input', updateBrushSize);
+            document.getElementById('optionPicker').addEventListener('input', updateColor);
             document.getElementById('opacity').addEventListener('input', updateOpacity);
             
             // パーティクルアニメーション開始
@@ -766,13 +766,13 @@
         
         // ブラシサイズ更新
         function updateBrushSize() {
-            currentSize = parseInt(document.getElementById('brushSize').value);
-            document.getElementById('brushSizeDisplay').textContent = currentSize;
+            currentSize = parseInt(document.getElementById('itemSize').value);
+            document.getElementById('itemSizeDisplay').textContent = currentSize;
         }
         
         // カラー更新
         function updateColor() {
-            currentColor = document.getElementById('colorPicker').value;
+            currentColor = document.getElementById('optionPicker').value;
         }
         
         // 透明度更新
