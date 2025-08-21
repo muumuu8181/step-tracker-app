@@ -3,9 +3,9 @@
   "description": "よっぽどの馬鹿でも使える万能アプリテンプレート - カップラーメン方式",
   "main": "universal-system/core/universal-template.js",
   "scripts": {
-    "version:update": "node tools/version/update.js",
-    "cleanup:paint": "node tools/cleanup/remove-paint-artifacts.js",
-    "init:profile": "node tools/profile/apply.js",
+    "version:update": "node PROTECT-保護された/deployment/tools/version/update.js",
+    "cleanup:paint": "node PROTECT-保護された/deployment/tools/cleanup/remove-paint-artifacts.js",
+    "init:profile": "node PROTECT-保護された/deployment/tools/profile/apply.js",
     "check:unused": "knip && ts-prune && depcruise -v .dependency-cruiser.cjs",
     "test": "vitest run",
     "test:e2e": "playwright test",
@@ -47,8 +47,8 @@
   },
   "version": "0.41",
   "directories": {
-    "doc": "docs",
-    "test": "tests"
+    "doc": "VIEW-見るだけ/documentation",
+    "test": "CHANGE-変更する/improvements/tests"
   },
   "type": "commonjs",
   "devDependencies": {

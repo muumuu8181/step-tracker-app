@@ -7,8 +7,8 @@ export default defineConfig({
   root: 'app/web',
   resolve: {
     alias: {
-      '@core': path.resolve(__dirname, 'core'),
-      '@shared': path.resolve(__dirname, 'shared'),
+      '@core': path.resolve(__dirname, 'PROTECT-保護された/core-system/core'),
+      '@shared': path.resolve(__dirname, 'PROTECT-保護された/core-system/shared'),
       '@web': path.resolve(__dirname, 'app/web/src')
     }
   },
@@ -17,7 +17,7 @@ export default defineConfig({
     open: true
   },
   build: {
-    outDir: '../../dist',
+    outDir: '../../PROTECT-保護された/deployment/dist',
     emptyOutDir: true
   }
 });

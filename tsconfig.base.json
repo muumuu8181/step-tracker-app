@@ -13,18 +13,20 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
     "paths": {
-      "@core/*": ["core/*"],
-      "@shared/*": ["shared/*"],
+      "@core/*": ["PROTECT-保護された/core-system/core/*"],
+      "@shared/*": ["PROTECT-保護された/core-system/shared/*"],
       "@web/*": ["app/web/src/*"]
     },
     "types": ["vitest/globals", "@playwright/test", "react", "react-dom"]
   },
   "include": [
-    "core/**/*",
-    "shared/**/*",
+    "PROTECT-保護された/core-system/core/**/*",
+    "PROTECT-保護された/core-system/shared/**/*",
+    "CREATE-新しく作る/**/*",
+    "CHANGE-変更する/**/*", 
     "app/**/*",
-    "tests/**/*",
-    "tools/**/*"
+    "CHANGE-変更する/improvements/tests/**/*",
+    "PROTECT-保護された/deployment/tools/**/*"
   ],
   "exclude": [
     "node_modules",

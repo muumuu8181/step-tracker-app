@@ -58,6 +58,20 @@ git push -u origin main
 
 ---
 
+## 💬 ディスカッション・改善提案
+
+このテンプレートの改善や整理に関する議論は、専用フォルダで行います：
+
+📁 **`template-improvement-analysis/`**
+- フォルダ構造の改善提案
+- V1→V2移行計画
+- 技術スタック検討
+- アーキテクチャ設計議論
+
+詳細な運用ルールは [`template-improvement-analysis/DISCUSSION_FOLDER_RULES.md`](template-improvement-analysis/DISCUSSION_FOLDER_RULES.md) を参照してください。
+
+---
+
 ## 🔢 バージョン管理ルール
 
 ### 初回公開
