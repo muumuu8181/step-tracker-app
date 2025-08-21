@@ -3,18 +3,18 @@
     "name": "universal-app-template",
     "created": "2025-01-10T00:00:00.000Z",
     "template": "custom",
-    "version": "0.35"
+    "version": "2.01"
   },
   "app": {
-    "name": "Awesome Paint Studio",
-    "nameEn": "Awesome Paint Studio",
-    "description": "最高にかっこいい音響付きペイントスタジオ",
-    "version": "0.1",
+    "name": "Universal App Template",
+    "nameEn": "Universal App Template",
+    "description": "よっぽどの馬鹿でも使える万能アプリテンプレート",
+    "version": "2.01",
     "author": "",
     "license": "MIT"
   },
   "database": {
-    "collection": "paintings",
+    "collection": "app_data",
     "subCollections": [],
     "structure": {
       "timestamp": "number",
@@ -31,7 +31,7 @@
     "warningColor": "#ffff00",
     "infoColor": "#00ffff",
     "buttons": {
-      "save": "🎨 作品保存",
+      "save": "💾 保存",
       "delete": "🗑️ 削除",
       "edit": "✏️ 編集",
       "cancel": "❌ キャンセル",
@@ -39,10 +39,10 @@
       "logout": "ログアウト"
     },
     "labels": {
-      "brushSize": "ブラシサイズ",
-      "color": "カラー",
-      "title": "作品タイトル",
-      "effect": "エフェクト"
+      "itemSize": "アイテムサイズ",
+      "color": "色",
+      "title": "タイトル",
+      "type": "タイプ"
     },
     "defaultValue": 10.0,
     "gridSize": 30,
