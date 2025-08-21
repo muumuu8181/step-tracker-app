@@ -1,0 +1,25 @@
+{
+  "entry": [
+    "app/web/src/app.tsx",
+    "core/index.ts",
+    "tests/**/*.test.ts",
+    "tools/**/*.{js,ts}"
+  ],
+  "project": [
+    "**/*.{ts,tsx,js,jsx}",
+    "!node_modules/**",
+    "!dist/**",
+    "!build/**"
+  ],
+  "ignore": [
+    "vite.config.ts",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    ".eslintrc.cjs",
+    ".dependency-cruiser.cjs"
+  ],
+  "ignoreDependencies": [
+    "@vitejs/plugin-react",
+    "vite"
+  ]
+}

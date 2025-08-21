@@ -1,0 +1,52 @@
+{
+  "minimal": {
+    "description": "SPA/MPA + 最小構成",
+    "directories": ["core", "app/web", "shared", "tests", "tools"],
+    "dependencies": {
+      "dev": ["vite", "@vitejs/plugin-react", "react", "react-dom"],
+      "prod": []
+    },
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview"
+    }
+  },
+  "ssr": {
+    "description": "Next/Nuxt想定",
+    "directories": ["core", "shared", "tests", "tools", "app/web"],
+    "dependencies": {
+      "dev": ["next", "react", "react-dom"],
+      "prod": []
+    },
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start"
+    }
+  },
+  "edge": {
+    "description": "Serverless/Edge想定",
+    "directories": ["core", "shared", "tests", "tools", "functions"],
+    "dependencies": {
+      "dev": ["wrangler"],
+      "prod": []
+    },
+    "scripts": {
+      "dev": "wrangler dev",
+      "deploy": "wrangler deploy"
+    }
+  },
+  "lib": {
+    "description": "ライブラリ/CLI想定",
+    "directories": ["core", "shared", "tests", "tools"],
+    "dependencies": {
+      "dev": ["tsc", "vite"],
+      "prod": []
+    },
+    "scripts": {
+      "build": "tsc && vite build",
+      "prepublishOnly": "npm run build"
+    }
+  }
+}
