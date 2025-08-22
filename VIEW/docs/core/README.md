@@ -9,9 +9,9 @@ Copy-Item -Recurse "0000-00-00-project-template" "20250811\20250811-[アプリ�
 cd "20250811\20250811-[アプリ名]"
 ```
 
-### 2️⃣ 設定変更（2ファイルのみ）
+### 2️⃣ 設定変更（1ファイルのみ）
 
-#### `project-settings.json`
+#### `CHANGE/configs/tools/project-settings.json`
 ```json
 {
   "app": {
@@ -22,14 +22,6 @@ cd "20250811\20250811-[アプリ名]"
     "collection": "[データ名]" // ← ここを変更（例: todos, memos, calculations）
   }
 }
-```
-
-#### `src/custom/app-config.js`
-```javascript
-export const APP_CONFIG = {
-    appName: "[アプリ名]",        // ← 上と同じ名前
-    dataCollection: "[データ名]"  // ← 上と同じデータ名
-};
 ```
 
 ### 3️⃣ Git初期化とGitHub公開
@@ -135,11 +127,11 @@ git push -u origin main
 </div>
 ```
 
-### 📝 編集ファイル
-- `project-settings.json` - アプリ設定
-- `src/custom/app-config.js` - 動作設定  
-- `src/custom/styles.css` - **ここでデザインを大胆に変更！**
-- `index.html` - パネル2の中身のみ
+### 📝 主要編集ファイル
+- `CHANGE/configs/tools/project-settings.json` - アプリ設定
+- `CREATE/web/app/index.html` - **アプリのHTML構造を自由に変更！**
+- `CREATE/web/assets/icons/` - アプリアイコンファイル
+- `CREATE/web/assets/manifests/manifest.json` - PWA設定
 
 ---
 
@@ -237,87 +229,94 @@ git push -u origin main
 - 個人情報はFirebaseサーバー側で保護
 - アプリコードに個人データは含まれません
 
-## 📁 プロジェクト構造（v0.2.5）
+## 📁 新しいプロジェクト構造（v0.37）
 
-### 🔧 最小限のフォルダ構成
+### 🎯 CREATE/CHANGE/VIEW/PROTECT構造
 
 ```
 プロジェクト/
-├── index.html         # メインアプリファイル
-├── README.md          # このファイル
-├── package.json       # npm設定（必須）
-├── .gitignore         # Git設定（必須）
-├── _archive/          # 古いバックアップ（無視してOK）
-├── docs/              # すべてのドキュメント
-├── src/               # すべてのソースコード
-└── tests/             # テストファイル
+├── CREATE/                    # 🆕 新機能・アプリケーション開発
+│   ├── web/app/              # メインアプリファイル（index.html）
+│   ├── web/assets/           # アイコン、manifest等のアセット
+│   ├── components/           # 新UIコンポーネント
+│   ├── features/             # 新機能開発
+│   └── pages/                # 新ページ作成
+├── CHANGE/                    # 🔧 設定・改善・テスト
+│   ├── configs/              # 設定ファイル群
+│   │   ├── tools/           # project-settings.json等
+│   │   ├── typescript/      # tsconfig.json等
+│   │   └── build/           # ビルド設定
+│   └── improvements/tests/   # テストファイル
+├── VIEW/                      # 👀 文書・参照専用
+│   ├── docs/                # すべてのドキュメント
+│   ├── examples/            # サンプルコード
+│   └── reference/           # リファレンス
+└── PROTECT/                   # 🔒 重要システム・管理
+    ├── core-system/         # TypeScriptコアシステム
+    ├── runtime/             # 実行時管理ファイル
+    ├── deployment/          # デプロイ・ツール
+    └── local/               # ローカル設定・ログ
 ```
 
-### 📂 src/ フォルダ内の構成と編集可否
+### 📂 各フォルダの役割と編集可否
 
-| フォルダ | 役割 | 編集可否 | 説明 |
-|---------|------|---------|------|
-| **components/** | UIコンポーネント | ❌ **触るな** | 共通UIパーツ（common/にButton, Card, Modal等） |
-| **services/** | データサービス | ❌ **触るな** | auth.js, database.js, crud.js, data-manager.js, logger.js |
-| **features/** | 機能モジュール | ⚠️ **要相談** | アプリ固有の機能（main.js） |
-| **custom/** | カスタム設定 | ✅ **自由編集OK** | app-config.js, styles.css, loader.js, templates/ |
-| **scripts/** | 起動スクリプト | ⚠️ **要相談** | setup.sh, start-server.bat等 |
-| **examples/** | サンプルコード | ✅ **参考用** | simple-button-app.html, data-storage-usage.js |
-| **core-legacy/** | 旧コア | ❌ **触るな** | 旧バージョンの参照用（編集不要） |
+| フォルダ | 役割 | 編集可否 | 主要ファイル |
+|---------|------|---------|-------------|
+| **CREATE/** | アプリケーション・新機能 | ✅ **自由編集OK** | web/app/index.html, web/assets/icons/ |
+| **CHANGE/** | 設定・改善・テスト | ✅ **設定変更OK** | configs/tools/project-settings.json |
+| **VIEW/** | 文書・参照専用 | ✅ **参考用** | docs/, examples/, reference/ |
+| **PROTECT/** | 重要システム | ❌ **触るな** | core-system/, runtime/, deployment/ |
 
-### 🚫 絶対に触ってはいけないファイル
+### 🎯 主要ファイルの場所
 
+#### ✅ 自由に編集できるファイル
 ```
-src/
-├── components/        # ❌ UIコンポーネント群
-│   ├── common/       # 汎用UIコンポーネント
-│   └── ui.js         # UI基本機能
-├── services/         # ❌ コアサービス群
-│   ├── auth.js       # 認証サービス
-│   ├── database.js   # DBサービス（汎用化済み）
-│   ├── crud.js       # 汎用CRUD操作
-│   ├── data-manager.js # データ管理
-│   └── logger.js     # ログサービス
+CREATE/web/app/index.html        # メインアプリファイル
+CREATE/web/assets/icons/         # アプリアイコン
+CREATE/web/assets/manifests/     # PWA設定
+CHANGE/configs/tools/project-settings.json  # アプリ設定
 ```
 
-### ✅ 自由に編集できるファイル
-
+#### 🚫 システムファイル（触らない）
 ```
-src/
-├── custom/           # ✅ カスタマイズ領域
-│   ├── app-config.js # アプリ設定
-│   └── styles.css    # デザイン
-├── examples/         # ✅ サンプル（参考用）
+PROTECT/core-system/             # TypeScriptコアシステム
+PROTECT/deployment/              # デプロイツール
+PROTECT/runtime/                 # 実行時設定
 ```
 
 ## 🔄 他のアプリに変更する方法
 
 ### ✅ 変更してOKなファイル
-- `custom/app-config.js` → アプリの動作・設定
-- `custom/styles.css` → 見た目・デザイン
-- `index.html` の表示部分のみ → UI構造
+- `CREATE/web/app/index.html` → アプリのHTML構造
+- `CHANGE/configs/tools/project-settings.json` → アプリ設定
+- `CREATE/web/assets/icons/` → アプリアイコン
+- `CREATE/web/assets/manifests/manifest.json` → PWA設定
 
 ### 🚫 変更NGなファイル
-- `core/` 内のすべて
-- `index.html` のFirebase設定部分
+- `PROTECT/core-system/` → TypeScriptコアシステム
+- `PROTECT/deployment/` → デプロイツール
+- `PROTECT/runtime/` → 実行時設定
 
 ### 🎯 カスタマイズ例
 
 #### TODOアプリに変更
-1. `custom/app-config.js` で：アプリ名・ボタンをTODO関連に変更
-2. `custom/styles.css` で：カラーテーマをタスク管理系に変更
-3. `index.html` で：入力フィールドをタスク入力に変更
+1. `CHANGE/configs/tools/project-settings.json` → アプリ名・データベース設定をTODO用に変更
+2. `CREATE/web/app/index.html` → 入力フィールドをタスク入力に変更
+3. `CREATE/web/assets/icons/` → TODOアプリ用のアイコンに変更
 
 #### メモアプリに変更
-1. `custom/app-config.js` で：アプリ名・ボタンをメモ関連に変更
-2. `custom/styles.css` で：シンプルなカラーテーマに変更
+1. `CHANGE/configs/tools/project-settings.json` → アプリ名・データベース設定をメモ用に変更
+2. `CREATE/web/app/index.html` → メモ入力UIに変更
+3. `CREATE/web/assets/manifests/manifest.json` → メモアプリ名に変更
 
 ## ⚡ 開発ワークフロー
 
-1. **カスタマイズ** → `custom/` フォルダのみ編集
-2. **テスト** → ローカルでHTTPサーバー起動
-3. **デプロイ** → `git push` で自動デプロイ
-4. **確認** → https://muumuu8181.github.io/0000-00-00-project-template/
+1. **設定変更** → `CHANGE/configs/tools/project-settings.json` 編集
+2. **アプリ開発** → `CREATE/web/app/index.html` 編集
+3. **アイコン設定** → `CREATE/web/assets/icons/` に配置
+4. **テスト** → `CHANGE/improvements/tests/` でテスト実行
+5. **デプロイ** → `git push` で自動デプロイ
+6. **確認** → https://muumuu8181.github.io/0000-00-00-project-template/
 
 ## 🛡️ 保護メカニズム
 
