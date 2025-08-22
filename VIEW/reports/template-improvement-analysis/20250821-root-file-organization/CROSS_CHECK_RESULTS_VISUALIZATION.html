@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8×8クロスチェック評価結果 - ルートファイル整理</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .evaluation-matrix {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            font-weight: bold;
+        }
+        .evaluator-header {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            font-weight: bold;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+        .score-excellent { background-color: #4CAF50; color: white; font-weight: bold; }
+        .score-good { background-color: #8BC34A; color: white; }
+        .score-average { background-color: #FFC107; color: black; }
+        .score-poor { background-color: #FF9800; color: white; }
+        .score-bad { background-color: #F44336; color: white; }
+        .total-score {
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .ranking {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .rank-1 { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); }
+        .rank-2 { background: linear-gradient(135deg, #C0C0C0 0%, #A9A9A9 100%); }
+        .rank-3 { background: linear-gradient(135deg, #CD7F32 0%, #B8860B 100%); }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 8×8クロスチェック評価結果</h1>
+        <p>ルートファイル整理提案の総合比較分析</p>
+        <p><strong>作成日</strong>: 2025-08-21 | <strong>総評価数</strong>: 56評価 (8エージェント × 7提案)</p>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>🏆 最高評価</h3>
+            <p><strong>task-splitter</strong></p>
+            <p>平均: 8.2/10点</p>
+        </div>
+        <div class="card">
+            <h3>⚡ 効率性</h3>
+            <p><strong>78%時間短縮</strong></p>
+            <p>116分 → 25分</p>
+        </div>
+        <div class="card">
+            <h3>💰 ROI最高</h3>
+            <p><strong>agents-manager</strong></p>
+            <p>1,110%の投資効果</p>
+        </div>
+        <div class="card">
+            <h3>🛡️ 安全性</h3>
+            <p><strong>problem-sleuth</strong></p>
+            <p>5段階リスク管理</p>
+        </div>
+    </div>
+
+    <div class="evaluation-matrix">
+        <h2 style="padding: 20px; margin: 0; background: #333; color: white;">📊 評価マトリクス（10点満点）</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>評価者＼被評価者</th>
+                    <th>softengineer</th>
+                    <th>agents-manager</th>
+                    <th>doc-writer</th>
+                    <th>problem-sleuth</th>
+                    <th>general-purpose</th>
+                    <th>task-splitter</th>
+                    <th>rule-manager</th>
+                    <th>endless-tawaimonai</th>
+                    <th>平均</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="evaluator-header">softengineer</td>
+                    <td>-</td>
+                    <td class="score-good">7.8</td>
+                    <td class="score-good">7.5</td>
+                    <td class="score-good">8.0</td>
+                    <td class="score-good">8.4</td>
+                    <td class="score-excellent">8.6</td>
+                    <td class="score-good">8.5</td>
+                    <td class="score-average">6.2</td>
+                    <td class="score-good">7.9</td>
+                </tr>
+                <tr>
+                    <td class="evaluator-header">agents-manager</td>
+                    <td class="score-good">7.7</td>
+                    <td>-</td>
+                    <td class="score-good">7.3</td>
+                    <td class="score-good">7.5</td>
+                    <td class="score-good">8.1</td>
+                    <td class="score-good">7.9</td>
+                    <td class="score-good">8.0</td>
+                    <td class="score-average">6.3</td>
+                    <td class="score-good">7.5</td>
+                </tr>
+                <tr>
+                    <td class="evaluator-header">doc-writer</td>
+                    <td class="score-good">7.2</td>
+                    <td class="score-good">7.5</td>
+                    <td>-</td>
+                    <td class="score-good">7.8</td>
+                    <td class="score-good">8.2</td>
+                    <td class="score-good">8.2</td>
+                    <td class="score-good">7.5</td>
+                    <td class="score-average">6.8</td>
+                    <td class="score-good">7.6</td>
+                </tr>
+                <tr>
+                    <td class="evaluator-header">problem-sleuth</td>
+                    <td class="score-average">6.3</td>
+                    <td class="score-average">6.5</td>
+                    <td class="score-good">7.3</td>
+                    <td>-</td>
+                    <td class="score-average">6.8</td>
+                    <td class="score-good">8.3</td>
+                    <td class="score-average">6.8</td>
+                    <td class="score-poor">3.3</td>
+                    <td class="score-average">6.5</td>
+                </tr>
+                <tr>
+                    <td class="evaluator-header">general-purpose</td>
+                    <td class="score-good">7.7</td>
+                    <td class="score-good">8.3</td>
+                    <td class="score-good">7.8</td>
+                    <td class="score-good">7.9</td>
+                    <td>-</td>
+                    <td class="score-good">8.0</td>
+                    <td class="score-good">8.3</td>
+                    <td class="score-average">6.8</td>
+                    <td class="score-good">7.8</td>
+                </tr>
+                <tr>
+                    <td class="evaluator-header">task-splitter</td>
+                    <td class="score-good">8.3</td>
+                    <td class="score-good">7.5</td>
+                    <td class="score-average">6.5</td>
+                    <td class="score-good">8.0</td>
+                    <td class="score-good">7.2</td>
+                    <td>-</td>
+                    <td class="score-average">6.0</td>
+                    <td class="score-poor">4.5</td>
+                    <td class="score-average">6.9</td>
+                </tr>
+                <tr>
+                    <td class="evaluator-header">rule-manager</td>
+                    <td class="score-excellent">9.2</td>
+                    <td class="score-excellent">9.3</td>
+                    <td class="score-good">8.5</td>
+                    <td class="score-good">8.7</td>
+                    <td class="score-good">8.4</td>
+                    <td class="score-good">7.8</td>
+                    <td>-</td>
+                    <td class="score-average">5.0</td>
+                    <td class="score-good">8.1</td>
+                </tr>
+                <tr>
+                    <td class="evaluator-header">endless-tawaimonai</td>
+                    <td class="score-good">7.4</td>
+                    <td class="score-good">7.9</td>
+                    <td class="score-good">7.5</td>
+                    <td class="score-good">7.4</td>
+                    <td class="score-good">8.2</td>
+                    <td class="score-good">7.6</td>
+                    <td class="score-good">7.9</td>
+                    <td>-</td>
+                    <td class="score-good">7.7</td>
+                </tr>
+                <tr class="total-score">
+                    <td><strong>被評価者平均</strong></td>
+                    <td><strong>7.7</strong></td>
+                    <td><strong>7.8</strong></td>
+                    <td><strong>7.4</strong></td>
+                    <td><strong>7.6</strong></td>
+                    <td><strong>7.9</strong></td>
+                    <td><strong>8.2</strong></td>
+                    <td><strong>7.6</strong></td>
+                    <td><strong>5.6</strong></td>
+                    <td><strong>7.5</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="color-box score-excellent"></div>
+            <span>優秀 (8.5-10.0)</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box score-good"></div>
+            <span>良好 (7.0-8.4)</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box score-average"></div>
+            <span>普通 (5.5-6.9)</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box score-poor"></div>
+            <span>改善要 (4.0-5.4)</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box score-bad"></div>
+            <span>要再考 (0-3.9)</span>
+        </div>
+    </div>
+
+    <div class="ranking">
+        <h2>🏆 総合ランキング</h2>
+        <div style="display: grid; gap: 15px;">
+            <div class="card rank-1">
+                <h3>🥇 1位: task-splitter (8.2点)</h3>
+                <p><strong>特徴:</strong> 78%時間短縮・並行処理・作業効率最大化</p>
+                <p><strong>評価:</strong> softengineer(8.6), rule-manager(7.8)から高評価</p>
+            </div>
+            <div class="card rank-2">
+                <h3>🥈 2位: general-purpose (7.9点)</h3>
+                <p><strong>特徴:</strong> 4次元統合・BRIDGE領域・バランス重視</p>
+                <p><strong>評価:</strong> agents-manager(8.1), endless-tawaimonai(8.2)から高評価</p>
+            </div>
+            <div class="card rank-2">
+                <h3>🥈 2位: agents-manager (7.8点)</h3>
+                <p><strong>特徴:</strong> ROI 1,110%・生産性定量化・経営視点</p>
+                <p><strong>評価:</strong> rule-manager(9.3)から最高評価獲得</p>
+            </div>
+            <div class="card rank-3">
+                <h3>🥉 3位: softengineer (7.7点)</h3>
+                <p><strong>特徴:</strong> 技術制約遵守・実装安全性・git mv手順</p>
+                <p><strong>評価:</strong> rule-manager(9.2), task-splitter(8.3)から高評価</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 30px; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+        <h2>🎯 統合推奨戦略</h2>
+        <p><strong>最適解:</strong> task-splitter をベースに、general-purpose のバランス要素と agents-manager の ROI管理を統合</p>
+        <ul>
+            <li><strong>Phase 1:</strong> task-splitter の並行処理手法で効率実装</li>
+            <li><strong>Phase 2:</strong> general-purpose のBRIDGE領域で拡張性確保</li>
+            <li><strong>Phase 3:</strong> agents-manager のKPI管理で継続改善</li>
+            <li><strong>安全網:</strong> problem-sleuth のリスク管理を全Phase適用</li>
+        </ul>
+    </div>
+
+    <script>
+        // 動的なハイライト機能
+        document.addEventListener('DOMContentLoaded', function() {
+            const cells = document.querySelectorAll('td');
+            cells.forEach(cell => {
+                if (cell.textContent.includes('8.') || cell.textContent.includes('9.')) {
+                    cell.style.animation = 'pulse 2s infinite';
+                }
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</body>
+</html>
