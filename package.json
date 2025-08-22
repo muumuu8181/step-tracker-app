@@ -6,14 +6,14 @@
     "version:update": "node PROTECT-保護された/deployment/tools/version/update.js",
     "cleanup:paint": "node PROTECT-保護された/deployment/tools/cleanup/remove-paint-artifacts.js",
     "init:profile": "node PROTECT-保護された/deployment/tools/profile/apply.js",
-    "check:unused": "knip && ts-prune && depcruise -v .dependency-cruiser.cjs",
-    "test": "vitest run",
-    "test:e2e": "playwright test",
+    "check:unused": "knip --config CHANGE/configs/tools/knip.json && ts-prune --project CHANGE/configs/typescript/tsconfig.json && depcruise -v .dependency-cruiser.cjs",
+    "test": "vitest run --config CHANGE/configs/build/vitest.config.ts",
+    "test:e2e": "playwright test --config CHANGE/configs/build/playwright.config.ts",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "format": "prettier --write .",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "vite --config CHANGE/configs/build/vite.config.ts",
+    "build": "vite build --config CHANGE/configs/build/vite.config.ts",
+    "preview": "vite preview --config CHANGE/configs/build/vite.config.ts"
   },
   "keywords": [
     "universal-template",
