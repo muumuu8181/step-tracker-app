@@ -65,6 +65,11 @@ test-results-*.json
 local-notes.txt
 work_history_*.log
 
+# Local management files (now in PROTECT/local/)
+PROTECT/local/
+**/local-notes.txt
+**/work_history_*.log
+
 # Temporary files
 *.tmp
 *.temp

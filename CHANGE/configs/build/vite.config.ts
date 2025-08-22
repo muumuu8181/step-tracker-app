@@ -4,7 +4,14 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  root: '../../../CREATE/web/app',
+  root: path.resolve(__dirname, '../../../'),
+  build: {
+    rollupOptions: {
+      input: path.resolve(__dirname, '../../../CREATE/web/app/index.html')
+    },
+    outDir: path.resolve(__dirname, '../../../PROTECT/deployment/dist'),
+    emptyOutDir: true
+  },
   resolve: {
     alias: {
       '@core': path.resolve(__dirname, '../../../PROTECT/core-system/core'),
@@ -14,10 +21,7 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    open: true
-  },
-  build: {
-    outDir: '../../../PROTECT/deployment/dist',
-    emptyOutDir: true
+    open: true,
+    host: true
   }
 });

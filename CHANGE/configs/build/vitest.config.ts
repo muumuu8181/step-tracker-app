@@ -5,8 +5,8 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    include: ['../../../CHANGE/improvements/tests/unit/**/*.test.ts', '../../../CHANGE/improvements/tests/integration/**/*.test.ts'],
-    exclude: ['../../../CHANGE/improvements/tests/e2e/**/*']
+    include: ['CHANGE/improvements/tests/unit/**/*.test.ts', 'CHANGE/improvements/tests/integration/**/*.test.ts'],
+    exclude: ['CHANGE/improvements/tests/e2e/**/*']
   },
   resolve: {
     alias: {
