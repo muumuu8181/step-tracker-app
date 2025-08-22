@@ -23,7 +23,7 @@ jobs:
       run: npm ci
     
     - name: Run TypeScript check
-      run: npx tsc --noEmit
+      run: npx tsc --project CHANGE/configs/typescript/tsconfig.json --noEmit
     
     - name: Run tests
       run: npm test
