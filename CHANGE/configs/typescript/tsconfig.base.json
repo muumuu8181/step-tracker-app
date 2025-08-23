@@ -15,7 +15,7 @@
     "paths": {
       "@core/*": ["PROTECT/core-system/core/*"],
       "@shared/*": ["PROTECT/core-system/shared/*"],
-      "@web/*": ["app/web/src/*"]
+      "@web/*": ["CREATE/app/web/src/*"]
     },
     "types": ["vitest/globals", "@playwright/test", "react", "react-dom"]
   },
@@ -24,7 +24,6 @@
     "PROTECT/core-system/shared/**/*",
     "CREATE/**/*",
     "CHANGE/**/*", 
-    "app/**/*",
     "CHANGE/improvements/tests/**/*",
     "PROTECT/deployment/tools/**/*"
   ],
