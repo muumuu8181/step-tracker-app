@@ -11,21 +11,21 @@
     "skipLibCheck": true,
     "jsx": "react-jsx",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "baseUrl": "../../..",
+    "baseUrl": ".",
     "paths": {
-      "@core/*": ["PROTECT/core-system/core/*"],
-      "@shared/*": ["PROTECT/core-system/shared/*"],
-      "@web/*": ["CREATE/app/web/src/*"]
+      "@core/*": ["../../../PROTECT/core-system/core/*"],
+      "@shared/*": ["../../../PROTECT/core-system/shared/*"],
+      "@web/*": ["../../../CREATE/app/web/src/*"]
     },
     "types": ["vitest/globals", "@playwright/test", "react", "react-dom"]
   },
   "include": [
-    "PROTECT/core-system/core/**/*",
-    "PROTECT/core-system/shared/**/*",
-    "CREATE/**/*",
-    "CHANGE/**/*", 
-    "CHANGE/improvements/tests/**/*",
-    "PROTECT/deployment/tools/**/*"
+    "../../../PROTECT/core-system/core/**/*",
+    "../../../PROTECT/core-system/shared/**/*",
+    "../../../CREATE/**/*",
+    "../../../CHANGE/**/*", 
+    "../../../CHANGE/improvements/tests/**/*",
+    "../../../PROTECT/deployment/tools/**/*"
   ],
   "exclude": [
     "node_modules",
