@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "postToolUse": "C:\\Users\\user\\Desktop\\work\\90_cc\\20250821\\0000-00-00-project-template\\CHANGE\\configs\\claude-code\\hooks\\task-completion-notifier.bat",
+    "preToolUse": "C:\\Users\\user\\Desktop\\work\\90_cc\\20250821\\0000-00-00-project-template\\CHANGE\\configs\\claude-code\\hooks\\subagent-logger.bat",
+    "sessionStart": "C:\\Users\\user\\Desktop\\work\\90_cc\\20250821\\0000-00-00-project-template\\CHANGE\\configs\\claude-code\\hooks\\completion-logger.bat"
+  },
+  "editor": {
+    "defaultEditor": "code"
+  },
+  "git": {
+    "autoStage": false,
+    "autoCommit": false
+  }
+}
