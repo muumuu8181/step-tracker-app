@@ -1,6 +1,6 @@
 {
   "template": {
-    "version": "0.41",
+    "version": "0.42",
     "name": "Universal App Template",
     "description": "よっぽどの馬鹿でも使える万能アプリテンプレート"
   },
@@ -10,7 +10,7 @@
     "defaultDescription": "アプリの説明をここに入力"
   },
   "meta": {
-    "lastUpdated": "2025-08-21",
+    "lastUpdated": "2025-08-29",
     "managedBy": "version.json"
   }
 }

@@ -1,11 +1,11 @@
 {
   "name": "universal-template-system",
   "description": "よっぽどの馬鹿でも使える万能アプリテンプレート - カップラーメン方式",
-  "main": "universal-system/core/universal-template.js",
+  "main": "PROTECT/core-system/core/index.ts",
   "scripts": {
-    "version:update": "node PROTECT-保護された/deployment/tools/version/update.js",
-    "cleanup:paint": "node PROTECT-保護された/deployment/tools/cleanup/remove-paint-artifacts.js",
-    "init:profile": "node PROTECT-保護された/deployment/tools/profile/apply.js",
+    "version:update": "node PROTECT/deployment/tools/version/update.js",
+    "cleanup:paint": "node PROTECT/deployment/tools/cleanup/remove-paint-artifacts.js",
+    "init:profile": "node PROTECT/deployment/tools/profile/apply.js",
     "check:unused": "knip --config CHANGE/configs/tools/knip.json && ts-prune --project CHANGE/configs/typescript/tsconfig.json && depcruise -v .dependency-cruiser.cjs",
     "test": "vitest run --config CHANGE/configs/build/vitest.config.ts",
     "test:e2e": "playwright test --config CHANGE/configs/build/playwright.config.ts",
@@ -45,7 +45,7 @@
   "bugs": {
     "url": "https://github.com/muumuu8181/0000-00-00-project-template/issues"
   },
-  "version": "0.41",
+  "version": "0.42",
   "directories": {
     "doc": "VIEW-見るだけ/documentation",
     "test": "CHANGE-変更する/improvements/tests"

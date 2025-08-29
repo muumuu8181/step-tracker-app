@@ -60,7 +60,7 @@ git push -u origin main
 - 技術スタック検討
 - アーキテクチャ設計議論
 
-詳細な運用ルールは [`template-improvement-analysis/DISCUSSION_FOLDER_RULES.md`](template-improvement-analysis/DISCUSSION_FOLDER_RULES.md) を参照してください。
+詳細な運用ルールは [`template-improvement-analysis/DISCUSSION_FOLDER_RULES.md`](../../reports/template-improvement-analysis/DISCUSSION_FOLDER_RULES.md) を参照してください。
 
 ---
 

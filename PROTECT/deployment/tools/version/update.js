@@ -8,14 +8,14 @@ const path = require('path');
 
 // version.json を読み込み
 function loadVersionConfig() {
-  const versionPath = path.join(__dirname, '..', '..', 'version.json');
+  const versionPath = path.join(__dirname, '..', '..', '..', 'runtime', 'version.json');
   const versionData = JSON.parse(fs.readFileSync(versionPath, 'utf8'));
   return versionData;
 }
 
 // package.json を更新
 function updatePackageJson(versionConfig) {
-  const packagePath = path.join(__dirname, '..', '..', 'package.json');
+  const packagePath = path.join(__dirname, '..', '..', '..', '..', 'package.json');
   const packageData = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   
   packageData.version = versionConfig.template.version;
@@ -27,7 +27,7 @@ function updatePackageJson(versionConfig) {
 
 // project-settings.json を更新
 function updateProjectSettings(versionConfig) {
-  const settingsPath = path.join(__dirname, '..', '..', 'project-settings.json');
+  const settingsPath = path.join(__dirname, '..', '..', '..', '..', 'CHANGE', 'configs', 'tools', 'project-settings.json');
   const settingsData = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
   
   // Template version
