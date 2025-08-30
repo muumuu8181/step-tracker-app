@@ -1,4 +1,4 @@
-// 統合ライフ管理アプリのアプリケーションサービス
+// Universal App Template のアプリケーションサービス
 import { 
   AppState, 
   AppTab, 

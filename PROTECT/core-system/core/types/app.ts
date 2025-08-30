@@ -1,4 +1,4 @@
-// 統合ライフ管理アプリの型定義
+// Universal App Template の型定義
 
 // ===== 共通型定義 =====
 export type AppTab = 'weight' | 'sleep' | 'todo' | 'dashboard';

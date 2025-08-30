@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>統合ライフ管理アプリ</title>
+    <title>Universal App Template</title>
     
     <!-- iPhoneホーム画面用の設定 -->
     <link rel="apple-touch-icon" href="../assets/icons/icon-180.png">
@@ -16,10 +16,58 @@
     <link rel="icon" type="image/png" sizes="192x192" href="../assets/icons/icon-192.png">
     <link rel="manifest" href="../assets/manifests/manifest.json">
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <!-- Firebase SDK (条件付き読み込み) -->
+    <script>
+        // Firebase SDKの動的読み込み
+        async function loadFirebaseSDK() {
+            // Firebase Core
+            const firebaseScript = document.createElement('script');
+            firebaseScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js';
+            document.head.appendChild(firebaseScript);
+            
+            await new Promise((resolve) => {
+                firebaseScript.onload = resolve;
+            });
+            
+            // Firebase Auth & Database
+            const authScript = document.createElement('script');
+            authScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js';
+            document.head.appendChild(authScript);
+            
+            const dbScript = document.createElement('script');
+            dbScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js';
+            document.head.appendChild(dbScript);
+            
+            await Promise.all([
+                new Promise((resolve) => { authScript.onload = resolve; }),
+                new Promise((resolve) => { dbScript.onload = resolve; })
+            ]);
+        }
+        
+        // 設定に基づいてFirebase読み込み判定
+        async function initializeApp() {
+            try {
+                // project-settings.json を読み込み
+                const response = await fetch('../../CHANGE/configs/tools/project-settings.json');
+                const settings = await response.json();
+                
+                // Firebase機能が有効な場合のみ読み込み
+                if (settings.features.authentication || settings.features.realtimeSync) {
+                    console.log('🔥 Firebase機能が有効 - SDK読み込み中...');
+                    await loadFirebaseSDK();
+                    console.log('✅ Firebase SDK読み込み完了');
+                } else {
+                    console.log('⚠️ Firebase機能は無効 - SDK読み込みスキップ');
+                }
+            } catch (error) {
+                console.warn('⚠️ 設定ファイル読み込みエラー - Firebase SDKをデフォルト読み込み');
+                await loadFirebaseSDK();
+            }
+        }
+        
+        // DOM読み込み完了後に初期化
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
     <style>
         body { font-family: Arial, sans-serif; padding: 5px; background: #f5f5f5; }
         .container { max-width: 800px; margin: 0 auto; background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }

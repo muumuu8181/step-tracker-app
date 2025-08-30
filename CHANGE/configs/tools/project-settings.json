@@ -72,12 +72,12 @@
     "testFramework": "none"
   },
   "paths": {
-    "custom": "src/custom/",
-    "services": "src/services/",
-    "components": "src/components/",
-    "templates": "src/custom/templates/",
-    "styles": "src/custom/styles.css",
-    "config": "src/custom/app-config.js"
+    "app": "CREATE/web/app/",
+    "assets": "CREATE/web/assets/",
+    "react_components": "CREATE/app/web/src/",
+    "core_system": "PROTECT/core-system/",
+    "configs": "CHANGE/configs/",
+    "tests": "CHANGE/improvements/tests/"
   },
   "metadata": {
     "lastModified": "2025-01-10T00:00:00.000Z",

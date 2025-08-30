@@ -8,7 +8,7 @@ test.describe('Integrated Life App E2E Tests', () => {
 
   test('basic smoke test - app loads correctly', async ({ page }) => {
     // Check if the app loads with correct title
-    await expect(page).toHaveTitle(/Integrated Life App|統合ライフ管理アプリ/);
+    await expect(page).toHaveTitle(/Universal App Template/);
     
     // Check that main navigation tabs are present
     await expect(page.locator('[data-testid="tab-dashboard"]')).toBeVisible();
