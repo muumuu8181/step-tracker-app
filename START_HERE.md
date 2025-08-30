@@ -66,6 +66,56 @@ package.json      ← プロジェクト設定ファイル
 
 **質問・相談 → VIEW/current-analysis/ にメモファイル作ってください**
 
+## 🚀 新プロジェクト作成手順
+
+### 1️⃣ 作業フォルダ作成
+```powershell
+# 本日の日付フォルダ作成（例：20250830）
+mkdir "C:\Users\user\Desktop\work\90_cc\[本日日付]"
+cd "C:\Users\user\Desktop\work\90_cc\[本日日付]"
+```
+
+### 2️⃣ テンプレートコピー
+```powershell
+# このテンプレートをコピー
+Copy-Item -Recurse "C:\Users\user\Desktop\work\90_cc\20250821\0000-00-00-project-template" "0000-00-00-project-template"
+```
+
+### 3️⃣ プロジェクト名にリネーム
+```powershell
+# プロジェクト名にリネーム
+Rename-Item "0000-00-00-project-template" "[本日日付]-[プロジェクト名]"
+cd "[本日日付]-[プロジェクト名]"
+```
+
+### 4️⃣ プロジェクト設定変更
+`CHANGE/configs/tools/project-settings.json` を編集：
+```json
+{
+  "app": {
+    "name": "[あなたのアプリ名]",
+    "description": "[アプリの説明]"
+  },
+  "database": {
+    "collection": "[データ名]"
+  }
+}
+```
+
+### 5️⃣ 開発開始
+- アプリのメイン開発: `CREATE/web/app/index.html`
+- 設定ファイル: `CHANGE/configs/`
+- ドキュメント: `VIEW/current-analysis/`
+
+### 制約条件
+- テンプレートの構造（CREATE/CHANGE/VIEW/PROTECT）を維持
+- 疑問点・困った点があれば記録
+
+### 成功基準
+- 動作するアプリが完成
+- テンプレート構造が崩れていない
+- 設定とアプリが適切に分離されている
+
 ## 🚨 重要: ドキュメント変更ルール
 
 **AI作業者向けルール（厳守）:**
