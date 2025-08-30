@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万歩計日々記録アプリ</title>
+    
+    <!-- iPhoneホーム画面用の設定 -->
+    <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="万歩計記録">
+    
+    <!-- Android/その他用 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+    <link rel="manifest" href="assets/manifests/manifest.json">
+    
+    <!-- Firebase SDK (条件付き読み込み) -->
+    <script>
+        // Firebase SDKの動的読み込み
+        async function loadFirebaseSDK() {
+            // Firebase Core
+            const firebaseScript = document.createElement('script');
+            firebaseScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js';
+            document.head.appendChild(firebaseScript);
+            
+            await new Promise((resolve) => {
+                firebaseScript.onload = resolve;
+            });
+            
+            // Firebase Auth & Database
+            const authScript = document.createElement('script');
+            authScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js';
+            document.head.appendChild(authScript);
+            
+            const dbScript = document.createElement('script');
+            dbScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js';
+            document.head.appendChild(dbScript);
+            
+            await Promise.all([
+                new Promise((resolve) => { authScript.onload = resolve; }),
+                new Promise((resolve) => { dbScript.onload = resolve; })
+            ]);
+        }
+        
+        // 設定に基づいてFirebase読み込み判定
+        async function initializeApp() {
+            try {
+                // project-settings.json を読み込み
+                const response = await fetch('CHANGE/configs/tools/project-settings.json');
+                const settings = await response.json();
+                
+                // Firebase機能が有効な場合のみ読み込み
+                if (settings.features.authentication || settings.features.realtimeSync) {
+                    console.log('🔥 Firebase機能が有効 - SDK読み込み中...');
+                    await loadFirebaseSDK();
+                    console.log('✅ Firebase SDK読み込み完了');
+                } else {
+                    console.log('⚠️ Firebase機能は無効 - SDK読み込みスキップ');
+                }
+            } catch (error) {
+                console.warn('⚠️ 設定ファイル読み込みエラー - Firebase SDKをデフォルト読み込み');
+                await loadFirebaseSDK();
+            }
+        }
+        
+        // DOM読み込み完了後に初期化
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="assets/styles/app.css">
+    
+    <!-- Firebase Configuration -->
+    <script src="PROTECT/core-system/firebase-config.js"></script>
+    
+    <!-- Authentication Service -->
+    <script src="PROTECT/core-system/auth-service.js"></script>
+    
+    <!-- Application Logic -->
+    <script src="PROTECT/core-system/app-logic.js"></script>
+    
+    <!-- Debug Tools (Development Only) -->
+    <script src="PROTECT/development/debug-tools.js"></script>
+</head>
+<body class="panel-mode">
+    <!-- ⚠️ 開発補助機能（削除禁止） -->
+    <button class="mode-toggle" onclick="togglePanelMode()">📊 パネル表示</button>
+    <button class="grid-toggle" onclick="toggleGridMode()">⊞ グリッド表示</button>
+    <!-- 開発補助機能ここまで -->
+    
+    <div class="container">
+        <!-- ⚠️ パネル1: 認証（削除禁止） -->
+        <div class="section-panel panel-L">
+            <span class="panel-number">[1-L]</span>
+            <div class="app-header">
+                <h1 class="app-title">👟 万歩計日々記録アプリ v1.0</h1>
+                <p class="app-subtitle">毎日の歩数を記録・管理するアプリ</p>
+            </div>
+            <!-- 認証セクション -->
+            <div class="auth-section" id="authSection">
+                <h3>🔐 ログイン</h3>
+                <p>Googleアカウントでログインしてデータを保存・同期できます</p>
+                <button class="auth-button" onclick="handleGoogleLogin()">Googleでログイン</button>
+            </div>
+            <!-- ユーザー情報表示 (ログイン後に表示) -->
+            <div class="user-info section-panel panel-M hidden" id="userInfo">
+                <span class="panel-number">[1.1-M]</span>
+                <span>👤 ログイン中: <span id="userName"></span></span>
+                <button class="logout-button" onclick="handleLogout()">ログアウト</button>
+            </div>
+        </div>
+        
+        <!-- パネル2: アプリコンテンツ（カスタマイズ領域） -->
+        <div class="section-panel panel-L hidden" id="userPanel">
+            <span class="panel-number">[2-L]</span>
+
+            <!-- 万歩計記録フォーム -->
+            <div class="step-tracker-form" id="stepTrackerForm">
+                <div class="form-panel section-panel panel-M" data-grid="B3">
+                    <span class="panel-number">[2.1-M]</span>
+                    <h3 style="margin-top: 0; margin-bottom: 8px;">👟 歩数記録</h3>
+                    
+                    <!-- 入力フォーム -->
+                    <div class="input-section">
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="recordDate" style="display: block; margin-bottom: 5px;">📅 日付:</label>
+                            <input type="date" id="recordDate" style="width: 100%; padding: 8px; border: 1px solid #ff0080; border-radius: 5px;">
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="stepCount" style="display: block; margin-bottom: 5px;">👣 歩数:</label>
+                            <input type="number" id="stepCount" placeholder="例: 8000" min="0" max="100000" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ff0080; border-radius: 5px;">
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="memo" style="display: block; margin-bottom: 5px;">📝 メモ (任意):</label>
+                            <textarea id="memo" placeholder="例: 公園を散歩、雨で室内運動" rows="3"
+                                style="width: 100%; padding: 8px; border: 1px solid #ff0080; border-radius: 5px; resize: vertical;"></textarea>
+                        </div>
+                        
+                        <button onclick="saveStepRecord()" style="background: #00ff80; color: black; border: none; padding: 12px 24px; border-radius: 5px; margin: 5px; width: 100%; font-weight: bold;">💾 記録保存</button>
+                    </div>
+                </div>
+                
+                <!-- 履歴表示 -->
+                <div class="history-container section-panel panel-M" data-grid="B8">
+                    <span class="panel-number">[2.2-M]</span>
+                    <h3 style="margin-top: 0; margin-bottom: 10px;">📊 歩数履歴</h3>
+                    
+                    <div id="stepHistory" style="max-height: 300px; overflow-y: auto; border: 1px solid #ff0080; border-radius: 5px; padding: 10px; background: #f9f9f9;">
+                        <p style="text-align: center; color: #666;">まだ記録がありません</p>
+                    </div>
+                    
+                    <!-- アクションボタン -->
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button onclick="refreshHistory()" style="background: #0080ff; color: white; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🔄 履歴更新</button>
+                        <button onclick="exportHistory()" style="background: #ffff00; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">📤 履歴エクスポート</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ⚠️ パネル3: ログ（削除禁止） -->
+        <div class="section-panel panel-L">
+            <span class="panel-number">[3-L]</span>
+            <h3>📋 アプリログ <button class="universal-copy-btn" onclick="copyLogs()" style="background: #28a745; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 12px;">📋 ログをコピー</button></h3>
+            <div class="data-area" id="logArea">
+            アプリテンプレート v0.37 起動完了...<br>
+            🔥 Firebase設定完了<br>
+            🔐 Google認証準備完了<br>
+            </div>
+        </div>
+        
+        <!-- ⚠️ パネル4: デバッグボタン（削除禁止） -->
+        <div class="section-panel panel-L" style="margin-top: 8px; text-align: center;">
+            <span class="panel-number">[4-L]</span>
+            <button class="universal-copy-btn" onclick="debugFirebaseConnection()" style="background: #ff6b6b; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🔍 Firebase Debug</button>
+            <button onclick="testGridAdjust()" style="background: #17a2b8; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">📐 Grid調整テスト</button>
+            <button class="universal-copy-btn" onclick="checkLoginIssues()" style="background: #ffc107; color: #212529; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">⚠️ ログイン問題診断</button>
+            <button class="universal-copy-btn" onclick="copyDebugInfo()" style="background: #17a2b8; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">📋 デバッグ情報をコピー</button>
+            <button class="universal-copy-btn" onclick="checkDatabaseStructure()" style="background: #6f42c1; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🏗️ DB構造確認</button>
+            <button class="universal-copy-btn" onclick="checkMobileSupport()" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">📱 モバイル診断</button>
+            <button class="universal-copy-btn" onclick="forceAuthCheck()" style="background: #fd7e14; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🔄 認証状態確認</button>
+            <button class="universal-copy-btn" onclick="checkFirebaseConfig()" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🔧 Firebase設定</button>
+            <button class="universal-copy-btn" onclick="testPopup()" style="background: #20c997; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🧪 ポップアップテスト</button>
+            <button class="universal-copy-btn" onclick="window.open('test-error.html', '_blank')" style="background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin: 5px;">🚨 エラーテスト</button>
+        </div>
+        
+    </div>
+
+    <script>
+        // Firebase初期化（外部ファイルから）
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initializeFirebase === 'function') {
