@@ -1,6 +1,6 @@
 {
   "name": "universal-template-system",
-  "description": "よっぽどの馬鹿でも使える万能アプリテンプレート - カップラーメン方式",
+  "description": "誰でも使える万能アプリテンプレート - カップラーメン方式",
   "main": "PROTECT/core-system/core/index.ts",
   "scripts": {
     "version:update": "node PROTECT/deployment/tools/version/update.js",

@@ -1,26 +1,27 @@
 {
   "project": {
-    "name": "universal-app-template",
-    "created": "2025-01-10T00:00:00.000Z",
+    "name": "step-tracker-app",
+    "created": "2025-08-30T00:00:00.000Z",
     "template": "custom",
     "version": "0.42"
   },
   "app": {
-    "name": "Universal App Template",
-    "nameEn": "Universal App Template",
-    "description": "よっぽどの馬鹿でも使える万能アプリテンプレート",
+    "name": "万歩計日々記録アプリ",
+    "nameEn": "Step Tracker App",
+    "description": "日々の歩数を記録・管理するアプリ",
     "version": "1.0.0",
     "author": "",
     "license": "MIT"
   },
   "database": {
-    "collection": "app_data",
+    "collection": "step_records",
     "subCollections": [],
     "structure": {
-      "timestamp": "number",
+      "date": "string",
+      "steps": "number",
+      "memo": "string",
       "createdAt": "string",
-      "updatedAt": "string",
-      "customData": "any"
+      "updatedAt": "string"
     }
   },
   "ui": {

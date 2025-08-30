@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal App Template</title>
+    <title>万歩計日々記録アプリ</title>
     
     <!-- iPhoneホーム画面用の設定 -->
     <link rel="apple-touch-icon" href="../assets/icons/icon-180.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="アプリ名">
+    <meta name="apple-mobile-web-app-title" content="万歩計記録">
     
     <!-- Android/その他用 -->
     <link rel="icon" type="image/png" sizes="192x192" href="../assets/icons/icon-192.png">
@@ -95,8 +95,8 @@
         <div class="section-panel panel-L">
             <span class="panel-number">[1-L]</span>
             <div class="app-header">
-                <h1 class="app-title">📱 Universal App Template v0.41</h1>
-                <p class="app-subtitle">よっぽどの馬鹿でも使える万能アプリテンプレート</p>
+                <h1 class="app-title">👟 万歩計日々記録アプリ v1.0</h1>
+                <p class="app-subtitle">毎日の歩数を記録・管理するアプリ</p>
             </div>
             <!-- 認証セクション -->
             <div class="auth-section" id="authSection">
@@ -116,57 +116,48 @@
         <div class="section-panel panel-L hidden" id="userPanel">
             <span class="panel-number">[2-L]</span>
 
-            <!-- 汎用ツール -->
-            <div class="app-tools" id="appTools">
-                <div class="tool-panel section-panel panel-M" data-grid="B3">
+            <!-- 万歩計記録フォーム -->
+            <div class="step-tracker-form" id="stepTrackerForm">
+                <div class="form-panel section-panel panel-M" data-grid="B3">
                     <span class="panel-number">[2.1-M]</span>
-                    <h3 style="margin-top: 0; margin-bottom: 8px;">📱 Universal App Template</h3>
+                    <h3 style="margin-top: 0; margin-bottom: 8px;">👟 歩数記録</h3>
                     
-                    <!-- ツール選択 -->
-                    <div class="app-tools">
-                        <button type="button" class="tool-btn active" onclick="selectTool('tool1')" data-tool="tool1" style="background: #ff0080;">🔧 ツール1</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('tool2')" data-tool="tool2" style="background: #00ffff;">⚙️ ツール2</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('tool3')" data-tool="tool3" style="background: #ff8000;">🛠️ ツール3</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('tool4')" data-tool="tool4" style="background: #ffff00;">📐 ツール4</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('tool5')" data-tool="tool5" style="background: #80ff00;">📏 ツール5</button>
-                        <button type="button" class="tool-btn" onclick="selectTool('tool6')" data-tool="tool6" style="background: #ff0040;">🔩 ツール6</button>
-                    </div>
-                    
-                    <!-- コントロールパネル -->
-                    <div class="controls section-panel panel-S" data-grid="B6-D6">
-                        <span class="panel-number">[2.1.1-S]</span>
-                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                            <div>
-                                <label>📏 サイズ: <span id="itemSizeDisplay">10</span></label>
-                                <input type="range" id="itemSize" min="1" max="50" value="10" style="width: 100px;">
-                            </div>
-                            <div>
-                                <label>🎨 設定:</label>
-                                <input type="color" id="optionPicker" value="#ff0080" style="width: 40px; height: 30px;">
-                            </div>
-                            <div>
-                                <label>💧 透明度: <span id="opacityDisplay">100%</span></label>
-                                <input type="range" id="opacity" min="0" max="100" value="100" style="width: 100px;">
-                            </div>
+                    <!-- 入力フォーム -->
+                    <div class="input-section">
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="recordDate" style="display: block; margin-bottom: 5px;">📅 日付:</label>
+                            <input type="date" id="recordDate" style="width: 100%; padding: 8px; border: 1px solid #ff0080; border-radius: 5px;">
                         </div>
+                        
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="stepCount" style="display: block; margin-bottom: 5px;">👣 歩数:</label>
+                            <input type="number" id="stepCount" placeholder="例: 8000" min="0" max="100000" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ff0080; border-radius: 5px;">
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="memo" style="display: block; margin-bottom: 5px;">📝 メモ (任意):</label>
+                            <textarea id="memo" placeholder="例: 公園を散歩、雨で室内運動" rows="3"
+                                style="width: 100%; padding: 8px; border: 1px solid #ff0080; border-radius: 5px; resize: vertical;"></textarea>
+                        </div>
+                        
+                        <button onclick="saveStepRecord()" style="background: #00ff80; color: black; border: none; padding: 12px 24px; border-radius: 5px; margin: 5px; width: 100%; font-weight: bold;">💾 記録保存</button>
                     </div>
                 </div>
                 
-                <!-- キャンバス -->
-                <div class="canvas-container section-panel panel-M" data-grid="B8">
+                <!-- 履歴表示 -->
+                <div class="history-container section-panel panel-M" data-grid="B8">
                     <span class="panel-number">[2.2-M]</span>
-                    <div style="text-align: center; background: #000011; padding: 10px; border-radius: 10px;">
-                        <canvas id="appCanvas" width="600" height="400" 
-                            style="border: 2px solid #ff0080; border-radius: 8px; background: #000022; cursor: crosshair;">
-                        </canvas>
+                    <h3 style="margin-top: 0; margin-bottom: 10px;">📊 歩数履歴</h3>
+                    
+                    <div id="stepHistory" style="max-height: 300px; overflow-y: auto; border: 1px solid #ff0080; border-radius: 5px; padding: 10px; background: #f9f9f9;">
+                        <p style="text-align: center; color: #666;">まだ記録がありません</p>
                     </div>
                     
                     <!-- アクションボタン -->
                     <div style="text-align: center; margin-top: 10px;">
-                        <button onclick="clearData()" style="background: #ff4444; color: white; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🗑️ リセット</button>
-                        <button onclick="saveData()" style="background: #00ff80; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">💾 データ保存</button>
-                        <button onclick="downloadData()" style="background: #ffff00; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">📤 エクスポート</button>
-                        <input type="text" id="paintingTitle" placeholder="作品タイトル" style="margin: 5px; padding: 8px; border-radius: 5px; border: 1px solid #ff0080;">
+                        <button onclick="refreshHistory()" style="background: #0080ff; color: white; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">🔄 履歴更新</button>
+                        <button onclick="exportHistory()" style="background: #ffff00; color: black; border: none; padding: 8px 16px; border-radius: 5px; margin: 5px;">📤 履歴エクスポート</button>
                     </div>
                 </div>
             </div>

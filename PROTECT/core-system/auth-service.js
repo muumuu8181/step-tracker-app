@@ -123,10 +123,12 @@ function showUserInterface(user) {
     document.getElementById('userPanel').classList.remove('hidden');
     document.getElementById('userName').textContent = user.displayName;
     
-    // ペイントキャンバス初期化
-    setTimeout(() => {
-        initPaintCanvas();
-    }, 100);
+    // 今日の日付を自動設定
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('recordDate').value = today;
+    
+    // 歩数データを読み込み
+    loadUserStepData(user.uid);
 }
 
 function showLoginInterface() {
