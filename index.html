@@ -192,6 +192,16 @@
     </div>
 
     <script>
+        // ログ関数の定義
+        function log(message) {
+            const logArea = document.getElementById('logArea');
+            if (logArea) {
+                logArea.innerHTML += message + '<br>';
+                logArea.scrollTop = logArea.scrollHeight;
+            }
+            console.log(message);
+        }
+        
         // Firebase初期化（外部ファイルから）
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof initializeFirebase === 'function') {
